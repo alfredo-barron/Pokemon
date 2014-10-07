@@ -1,9 +1,6 @@
 <?php
 include_once 'vars.inc.php';
 include_once 'arrays.php';
-include_once LANGS_FOLDER.'lang.common.php';
-use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Exception\ParseException;
 
 $app = new \Slim\Slim();
 if(COOKIES_ENABLED) {
@@ -31,39 +28,6 @@ $app->configureMode('development', function () use ($app) {
 
 $app->notFound(function () use ($app) { $app->render('404.twig'); });
 
-//Language
-$langCookie = COOKIE_PREFIX.'.lang';
-$selectedLangPrefix = $app->getCookie($langCookie);
-$selectedLangPath = LANGS_FOLDER.'lang.'.$selectedLangPrefix.'.yml';
-$defaultLang = $lang['langs'][0];
-$defaultLangPath = LANGS_FOLDER.'lang.'.$defaultLang['suffix'].'.yml';
-
-$yaml = new Parser();
-try {
-  $fallbackLang = $yaml->parse(file_get_contents($defaultLangPath));
-  $lang = array_merge($lang,$fallbackLang);
-} catch (ParseException $e) {
-  printf("Unable to parse the YAML string: %s<hr>", $e->getMessage());
-}
-
-if($selectedLangPrefix != null){
-  try {
-    if(file_exists($selectedLangPath)){
-      $selectedLang = $yaml->parse(file_get_contents($selectedLangPath));
-      $lang = array_merge($lang,$selectedLang);
-    }
-  } catch (ParseException $e) {
-    printf("Unable to parse the YAML string: %s<hr>", $e->getMessage());
-  }
-}
-
-$rootUri = $app->request()->getRootUri();
-$assetUri = $rootUri;
-$resourceUri = $_SERVER['REQUEST_URI'];
-
-include_once 'navbar.inc.php';
-$app->lang = (object) $lang;
-
 $view = $app->view();
 $app->view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
@@ -78,7 +42,6 @@ $app->view()->appendData(array(
   'css'  => CSS_FOLDER,
   'js'   => JS_FOLDER,
   'img'  => IMG_FOLDER,
-  'pdf' => PDF_FOLDER,
   'lang' => $lang,
   'langCookie' => $langCookie
 ));
