@@ -16,10 +16,8 @@ foreach(glob(MODELS_FOLDER.'*.php') as $model) {
 $auth = function ($app) {
   return function () use ($app) {
     if (!isset($_SESSION['user'])) {
-      //$_SESSION['redirectTo'] = $app->request()->getPathInfo();
-      $app->flash('error', $app->lang->loginError);
-      $app->flashKeep();
-      $app->redirect($app->urlFor('login'));
+      //$_SESSION['redirectTo'] = $app->request()->getPathInfo()
+      $app->redirect($app->urlFor('root'));
     }
   };
 };
@@ -36,79 +34,28 @@ $app->get('/', function() use($app){
   $app->render('index.twig');
 })->name('root');
 
-$app->get('/login', function() use($app){
-  $flash = $app->view()->getData('flash');
-  $error = '';
-  if(isset($flash['error'])) {
-    $error = $flash['error'];
-  }
-  $redirectTo = $app->urlFor('root');
-  /*if($app->request()->get('r') and ($app->request()->get('r') != $app->urlFor('logout')) and ($app->request()->get('r') != $app->urlFor('login'))) {
-    $_SESSION['redirectTo'] = $app->request()->get('r');
-  }
-
-  if(isset($_SESSION['redirectTo'])) {
-    $redirectTo = $_SESSION['redirectTo'];
-  }*/
-
-  $emailValue = $emailError = $passwordError = '';
-  if(isset($flash['email'])) {
-    $emailValue = $flash['email'];
-  }
-
-  if(isset($flash['errors']['email'])) {
-    $emailError = $flash['errors']['email'];
-  }
-
-  if(isset($flash['errors']['password'])) {
-    $passwordError = $flash['errors']['password'];
-  }
-
-  $data = array(
-    'error' => $error,
-    'emailValue' => $emailValue,
-    'emailError' => $emailError,
-    'passwordError' => $passwordError,
-    'redirectTo' => $redirectTo
-  );
-  $app->render('login.twig', $data);
-})->name('login');
-
 $app->post('/login', function() use($app){
   $post = (object) $app->request()->post();
-  $username = (isset($post->username)) ? $post->username : '';
+  $nombre = (isset($post->nombre)) ? $post->nombre : '';
   $password = (isset($post->password)) ? $post->password : '';
-  if($username == "admin" and $password == "admin") {
-    $_SESSION['user'] = 'admin';
-    $app->redirect($app->urlFor('admin'));
-  }
 
   $errors = array();
-  $user = User::with('Organization')->where('username','=',$username)->orWhere('email','=',$username)->first();
-  if(!is_null($user)){
-    if($user->password == md5($password)){
-      $_SESSION['user'] = $user;
+  $centro_pokemon = Centros_Pokemon::where('nombre','=',$nombre)->first();
+  if(!is_null($centro_pokemon)){
+    if($centro_pokemon->password == $password){
+      $_SESSION['user'] = $centro_pokemon;
     } else {
       $errors['password'] = $app->lang->passwordError;
     }
   } else {
-    $app->flash('email', $username);
-    $errors['email'] = $app->lang->emailError;
+    $app->flash('nombre', $nombre);
   }
 
   if(count($errors) > 0) {
-    $app->flash('errors', $errors);
-    $app->flashKeep();
     $app->redirect($app->urlFor('login'));
   }
 
-  /*if(isset($_SESSION['redirectTo'])) {
-    $tmp = $_SESSION['redirectTo'];
-    unset($_SESSION['redirectTo']);
-    $app->redirect($tmp);
-  }*/
-
-  $app->redirect($app->urlFor('dashboard'));
+  $app->redirect($app->urlFor('home'));
 })->name('login-post');
 
 $app->get('/logout', function() use($app){
@@ -121,13 +68,6 @@ $app->get('/logout', function() use($app){
 foreach(glob(CONTROLLERS_FOLDER.'*.php') as $router) {
   include_once $router;
 }
-
-//For routes that need login you should add $auth($app)
-/*
-$app->get('/private/', $auth($app), function () use ($app) {
-  $app->render('private.twig');
-});
-*/
 
 $app->run();
 ?>

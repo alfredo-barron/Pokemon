@@ -9,10 +9,10 @@
       <img src="{{ urlFor('root') }}public/img/entrada.png" class="img-responsive img-rounded" alt="Hoenn">
     </div>
   </div>
-  <form class="form-signin" role="form">
+  <form class="form-signin" action="{{ urlFor('login-post') }}" method="post" role="form">
     <h2 class="form-signin-heading text-center">Bienvenido a Hoenn</h2>
-    <input type="email" class="form-control" placeholder="Centro Pokémon" required autofocus>
-    <input type="password" class="form-control" placeholder="Contraseña" required>
+    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Centro Pokémon" required autofocus>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
     <label class="checkbox">
       <input type="checkbox" value="remember-me"> Recuerdame
     </label>
