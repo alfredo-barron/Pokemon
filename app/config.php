@@ -42,8 +42,6 @@ $app->view()->appendData(array(
   'css'  => CSS_FOLDER,
   'js'   => JS_FOLDER,
   'img'  => IMG_FOLDER,
-  'lang' => $lang,
-  'langCookie' => $langCookie
 ));
 
 //$app->view()->appendData(array('navbar' => $navbar));
