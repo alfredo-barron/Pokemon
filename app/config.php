@@ -37,8 +37,6 @@ $app->view()->appendData(array(
   'title' => TITLE,
   'app' => $app,
   'root' => $rootUri,
-  'assetUri' => $assetUri,
-  'activeUrl' => $resourceUri,
   'css'  => CSS_FOLDER,
   'js'   => JS_FOLDER,
   'img'  => IMG_FOLDER,
