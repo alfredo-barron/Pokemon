@@ -35,8 +35,6 @@ $app->view->parserExtensions = array(
 );
 $app->view()->appendData(array(
   'title' => TITLE,
-  'app' => $app,
-  'root' => $rootUri,
   'css'  => CSS_FOLDER,
   'js'   => JS_FOLDER,
   'img'  => IMG_FOLDER,
