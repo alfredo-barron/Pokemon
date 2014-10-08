@@ -22,13 +22,7 @@
     <div class="col-md-12">
       {% spaceless %}
       {% if user is defined and user is not null %}
-        {% if user.id is defined %}
           {% include 'navbar.twig' %}
-        {% else %}
-          {#{% include 'navbar.admin.twig' %}#}
-        {% endif %}
-      {% else %}
-        {#{% include 'navbar.twig' %}#}
       {% endif %}
       {% endspaceless %}
     </div>

@@ -1,6 +1,12 @@
 {% extends 'base.twig' %}
 {% block content %}
   <div class="container">
-    <h1>Estas logueado</h1>
+    <h1 class="text-center">Bienvenido a Hoenn!</h1>
+    <hr><hr>
+    <div align="center">
+      <img src="{{ urlFor('root') }}public/img/Treecko.png" alt="Treecko" class="img-rounded">
+      <img src="{{ urlFor('root') }}public/img/Torchic.png" alt="Torchic" class="img-rounded">
+      <img src="{{ urlFor('root') }}public/img/Mudkip.png" alt="Mudkip" class="img-rounded">
+    </div>
   </div>
 {% endblock %}
