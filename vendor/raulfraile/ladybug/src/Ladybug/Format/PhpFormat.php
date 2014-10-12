@@ -16,11 +16,6 @@ class PhpFormat implements FormatInterface
 
     const FORMAT_NAME = 'php';
 
-    /**
-     * Gets format name
-     *
-     * @return string
-     */
     public function getName()
     {
         return self::FORMAT_NAME;

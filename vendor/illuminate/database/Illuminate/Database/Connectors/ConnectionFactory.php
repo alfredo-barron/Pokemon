@@ -116,7 +116,7 @@ class ConnectionFactory {
 	/**
 	 * Get a read / write level configuration.
 	 *
-	 * @param  array   $config
+	 * @param  array  $config
 	 * @param  string  $type
 	 * @return array
 	 */
@@ -197,16 +197,16 @@ class ConnectionFactory {
 	/**
 	 * Create a new connection instance.
 	 *
-	 * @param  string   $driver
-	 * @param  \PDO     $connection
-	 * @param  string   $database
-	 * @param  string   $prefix
-	 * @param  array    $config
+	 * @param  string  $driver
+	 * @param  PDO     $connection
+	 * @param  string  $database
+	 * @param  string  $prefix
+	 * @param  array   $config
 	 * @return \Illuminate\Database\Connection
 	 *
 	 * @throws \InvalidArgumentException
 	 */
-	protected function createConnection($driver, PDO $connection, $database, $prefix = '', array $config = array())
+	protected function createConnection($driver, PDO $connection, $database, $prefix = '', $config = null)
 	{
 		if ($this->container->bound($key = "db.connection.{$driver}"))
 		{

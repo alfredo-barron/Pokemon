@@ -22,15 +22,15 @@ use Symfony\Component\Yaml\Yaml;
 class YamlFileDumper extends FileDumper
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function format(MessageCatalogue $messages, $domain)
     {
-        return Yaml::dump($messages->all($domain));
+         return Yaml::dump($messages->all($domain));
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function getExtension()
     {

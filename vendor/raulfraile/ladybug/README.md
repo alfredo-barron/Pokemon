@@ -41,8 +41,7 @@ ladybug_dump($var)
 
 ## Support for other libraries/frameworks
 
-* Symfony 2.x: [LadybugBundle](https://github.com/raulfraile/LadybugBundle).
-* Drupal 7x & 8.x: [Ladybug module](https://drupal.org/project/ld).
+* Symfony2: [LadybugBundle](https://github.com/raulfraile/LadybugBundle).
 
 ## Credits
 

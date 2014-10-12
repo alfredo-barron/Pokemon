@@ -6,7 +6,7 @@
  * Type:     function
  * Name:     siteUrl
  * Purpose:  outputs url for a function with the defined name method
- * version   0.1.2
+ * version   0.1.0
  * package   SlimViews
  * -------------------------------------------------------------
  */

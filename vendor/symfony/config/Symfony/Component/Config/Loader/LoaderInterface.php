@@ -32,7 +32,7 @@ interface LoaderInterface
      * @param mixed  $resource A resource
      * @param string $type     The resource type
      *
-     * @return bool    true if this class supports the given resource, false otherwise
+     * @return Boolean true if this class supports the given resource, false otherwise
      */
     public function supports($resource, $type = null);
 
@@ -49,4 +49,5 @@ interface LoaderInterface
      * @param LoaderResolverInterface $resolver A LoaderResolverInterface instance
      */
     public function setResolver(LoaderResolverInterface $resolver);
+
 }

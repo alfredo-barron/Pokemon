@@ -33,6 +33,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testSpecifications($file, $expected, $yaml, $comment)
     {
+        if ('escapedCharacters' == $file) {
+            if (!function_exists('iconv') && !function_exists('mb_convert_encoding')) {
+                $this->markTestSkipped('The iconv and mbstring extensions are not available.');
+            }
+        }
+
         $this->assertEquals($expected, var_export($this->parser->parse($yaml), true), $comment);
     }
 
@@ -56,9 +62,9 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                 if (isset($test['todo']) && $test['todo']) {
                     // TODO
                 } else {
-                    eval('$expected = '.trim($test['php']).';');
+                    $expected = var_export(eval('return '.trim($test['php']).';'), true);
 
-                    $tests[] = array($file, var_export($expected, true), $test['yaml'], $test['test']);
+                    $tests[] = array($file, $expected, $test['yaml'], $test['test']);
                 }
             }
         }
@@ -405,7 +411,7 @@ foo: |-
 
 EOF;
         $expected = array(
-            'foo' => "\n\nbar",
+            'foo' => "\n\nbar"
         );
 
         $this->assertSame($expected, $this->parser->parse($yaml));
@@ -440,8 +446,8 @@ EOF;
 
     public function testNonUtf8Exception()
     {
-        if (!function_exists('iconv')) {
-            $this->markTestSkipped('Exceptions for non-utf8 charsets require the iconv() function.');
+        if (!function_exists('mb_detect_encoding') || !function_exists('iconv')) {
+            $this->markTestSkipped('Exceptions for non-utf8 charsets require the mb_detect_encoding() and iconv() functions.');
 
             return;
         }
@@ -449,7 +455,7 @@ EOF;
         $yamls = array(
             iconv("UTF-8", "ISO-8859-1", "foo: 'äöüß'"),
             iconv("UTF-8", "ISO-8859-15", "euro: '€'"),
-            iconv("UTF-8", "CP1252", "cp1252: '©ÉÇáñ'"),
+            iconv("UTF-8", "CP1252", "cp1252: '©ÉÇáñ'")
         );
 
         foreach ($yamls as $yaml) {
@@ -458,7 +464,7 @@ EOF;
 
                 $this->fail('charsets other than UTF-8 are rejected.');
             } catch (\Exception $e) {
-                $this->assertInstanceOf('Symfony\Component\Yaml\Exception\ParseException', $e, 'charsets other than UTF-8 are rejected.');
+                 $this->assertInstanceOf('Symfony\Component\Yaml\Exception\ParseException', $e, 'charsets other than UTF-8 are rejected.');
             }
         }
     }
@@ -506,53 +512,6 @@ yaml:
   hash: me
 EOF
         );
-    }
-
-    /**
-     * > It is an error for two equal keys to appear in the same mapping node.
-     * > In such a case the YAML processor may continue, ignoring the second
-     * > `key: value` pair and issuing an appropriate warning. This strategy
-     * > preserves a consistent information model for one-pass and random access
-     * > applications.
-     *
-     * @see http://yaml.org/spec/1.2/spec.html#id2759572
-     * @see http://yaml.org/spec/1.1/#id932806
-     *
-     * @covers \Symfony\Component\Yaml\Parser::parse
-     */
-    public function testMappingDuplicateKeyBlock()
-    {
-        $input = <<<EOD
-parent:
-    child: first
-    child: duplicate
-parent:
-    child: duplicate
-    child: duplicate
-EOD;
-        $expected = array(
-            'parent' => array(
-                'child' => 'first',
-            ),
-        );
-        $this->assertSame($expected, Yaml::parse($input));
-    }
-
-    /**
-     * @covers \Symfony\Component\Yaml\Inline::parseMapping
-     */
-    public function testMappingDuplicateKeyFlow()
-    {
-        $input = <<<EOD
-parent: { child: first, child: duplicate }
-parent: { child: duplicate, child: duplicate }
-EOD;
-        $expected = array(
-            'parent' => array(
-                'child' => 'first',
-            ),
-        );
-        $this->assertSame($expected, Yaml::parse($input));
     }
 
     public function testEmptyValue()
@@ -649,32 +608,6 @@ EOT
             </body>
 
         footer # comment3
-EOF
-        ));
-    }
-
-    public function testReferenceResolvingInInlineStrings()
-    {
-        $this->assertEquals(array(
-            'var' => 'var-value',
-            'scalar' => 'var-value',
-            'list' => array('var-value'),
-            'list_in_list' => array(array('var-value')),
-            'map_in_list' => array(array('key' => 'var-value')),
-            'embedded_mapping' => array(array('key' => 'var-value')),
-            'map' => array('key' => 'var-value'),
-            'list_in_map' => array('key' => array('var-value')),
-            'map_in_map' => array('foo' => array('bar' => 'var-value')),
-        ), Yaml::parse(<<<EOF
-var:  &var var-value
-scalar: *var
-list: [ *var ]
-list_in_list: [[ *var ]]
-map_in_list: [ { key: *var } ]
-embedded_mapping: [ key: *var ]
-map: { key: *var }
-list_in_map: { key: [*var] }
-map_in_map: { foo: { bar: *var } }
 EOF
         ));
     }

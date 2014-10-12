@@ -37,7 +37,7 @@ $app->group('/inicio', $auth($app), function() use($app){
 
   });
 
-//Modulo de entrenadored
+//Modulo de entrenadores
   $app->group('/entrenadores', function() use($app){
 
     $app->get('/entrenadores.json(/:id)', function($id = null) use($app){

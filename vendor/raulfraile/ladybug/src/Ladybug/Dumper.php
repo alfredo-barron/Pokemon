@@ -150,13 +150,7 @@ class Dumper
         $this->callFile = null;
         $this->callLine = null;
 
-        $backtraceFlags = DEBUG_BACKTRACE_PROVIDE_OBJECT;
-        if (version_compare(PHP_VERSION, '5.3.6', '>=')) {
-            $backtraceFlags = DEBUG_BACKTRACE_IGNORE_ARGS;
-        }
-
-        $backtrace = debug_backtrace($backtraceFlags);
-
+        $backtrace = debug_backtrace();
         $backtraceCount = count($backtrace);
         $idx = $backtraceCount - 1;
         $found = false;

@@ -90,17 +90,17 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      * If you are not using the loaders and therefore don't want
      * to depend on the Config component, set this flag to false.
      *
-     * @param bool    $track true if you want to track resources, false otherwise
+     * @param Boolean $track true if you want to track resources, false otherwise
      */
     public function setResourceTracking($track)
     {
-        $this->trackResources = (bool) $track;
+        $this->trackResources = (Boolean) $track;
     }
 
     /**
      * Checks if resources are tracked.
      *
-     * @return bool    true if resources are tracked, false otherwise
+     * @return Boolean true if resources are tracked, false otherwise
      */
     public function isTrackingResources()
     {
@@ -174,7 +174,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      *
      * @param string $name The name of the extension
      *
-     * @return bool    If the extension exists
+     * @return Boolean If the extension exists
      *
      * @api
      */
@@ -428,7 +428,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      *
      * @param string $id The service identifier
      *
-     * @return bool    true if the service is defined, false otherwise
+     * @return Boolean true if the service is defined, false otherwise
      *
      * @api
      */
@@ -443,7 +443,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      * Gets a service.
      *
      * @param string  $id              The service identifier
-     * @param int     $invalidBehavior The behavior when the service does not exist
+     * @param integer $invalidBehavior The behavior when the service does not exist
      *
      * @return object The associated service
      *
@@ -460,45 +460,51 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
     {
         $id = strtolower($id);
 
-        if ($service = parent::get($id, ContainerInterface::NULL_ON_INVALID_REFERENCE)) {
-            return $service;
-        }
-
-        if (isset($this->loading[$id])) {
-            throw new LogicException(sprintf('The service "%s" has a circular reference to itself.', $id), 0, $e);
-        }
-
-        if (!$this->hasDefinition($id) && isset($this->aliasDefinitions[$id])) {
-            return $this->get($this->aliasDefinitions[$id]);
-        }
-
         try {
-            $definition = $this->getDefinition($id);
-        } catch (InvalidArgumentException $e) {
+            return parent::get($id, ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE);
+        } catch (InactiveScopeException $e) {
             if (ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE !== $invalidBehavior) {
-                return;
+                return null;
             }
 
             throw $e;
-        }
+        } catch (InvalidArgumentException $e) {
+            if (isset($this->loading[$id])) {
+                throw new LogicException(sprintf('The service "%s" has a circular reference to itself.', $id), 0, $e);
+            }
 
-        $this->loading[$id] = true;
+            if (!$this->hasDefinition($id) && isset($this->aliasDefinitions[$id])) {
+                return $this->get($this->aliasDefinitions[$id]);
+            }
 
-        try {
-            $service = $this->createService($definition, $id);
-        } catch (\Exception $e) {
+            try {
+                $definition = $this->getDefinition($id);
+            } catch (InvalidArgumentException $e) {
+                if (ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE !== $invalidBehavior) {
+                    return null;
+                }
+
+                throw $e;
+            }
+
+            $this->loading[$id] = true;
+
+            try {
+                $service = $this->createService($definition, $id);
+            } catch (\Exception $e) {
+                unset($this->loading[$id]);
+
+                if ($e instanceof InactiveScopeException && self::EXCEPTION_ON_INVALID_REFERENCE !== $invalidBehavior) {
+                    return null;
+                }
+
+                throw $e;
+            }
+
             unset($this->loading[$id]);
 
-            if ($e instanceof InactiveScopeException && self::EXCEPTION_ON_INVALID_REFERENCE !== $invalidBehavior) {
-                return;
-            }
-
-            throw $e;
+            return $service;
         }
-
-        unset($this->loading[$id]);
-
-        return $service;
     }
 
     /**
@@ -709,7 +715,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      *
      * @param string $id The service identifier
      *
-     * @return bool    true if the alias exists, false otherwise
+     * @return Boolean true if the alias exists, false otherwise
      *
      * @api
      */
@@ -839,7 +845,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      *
      * @param string $id The service identifier
      *
-     * @return bool    true if the service definition exists, false otherwise
+     * @return Boolean true if the service definition exists, false otherwise
      *
      * @api
      */
@@ -897,7 +903,7 @@ class ContainerBuilder extends Container implements TaggedContainerInterface
      *
      * @param Definition $definition A service definition instance
      * @param string     $id         The service identifier
-     * @param bool       $tryProxy   Whether to try proxying the service with a lazy proxy
+     * @param Boolean    $tryProxy   Whether to try proxying the service with a lazy proxy
      *
      * @return object The service described by the service definition
      *

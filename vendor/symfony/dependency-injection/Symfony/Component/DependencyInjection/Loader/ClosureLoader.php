@@ -52,7 +52,7 @@ class ClosureLoader extends Loader
      * @param mixed  $resource A resource
      * @param string $type     The resource type
      *
-     * @return bool    true if this class supports the given resource, false otherwise
+     * @return Boolean true if this class supports the given resource, false otherwise
      */
     public function supports($resource, $type = null)
     {

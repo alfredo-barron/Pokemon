@@ -12,7 +12,7 @@
 namespace Symfony\Component\Config\Definition\Builder;
 
 /**
- * Abstract class that contains common code of integer and float node definitions.
+ * Abstract class that contain common code of integer and float node definition.
  *
  * @author David Jeanmonod <david.jeanmonod@gmail.com>
  */

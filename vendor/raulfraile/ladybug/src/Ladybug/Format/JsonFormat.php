@@ -16,11 +16,6 @@ class JsonFormat implements FormatInterface
 
     const FORMAT_NAME = 'json';
 
-    /**
-     * Gets format name
-     *
-     * @return string
-     */
     public function getName()
     {
         return self::FORMAT_NAME;

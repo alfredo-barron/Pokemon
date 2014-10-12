@@ -228,6 +228,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCircularReference()
     {
+
         $sc = new ProjectServiceContainer();
         try {
             $sc->get('circular');

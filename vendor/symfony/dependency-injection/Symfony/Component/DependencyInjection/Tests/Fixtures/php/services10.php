@@ -16,8 +16,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
  */
 class ProjectServiceContainer extends Container
 {
-    private $parameters;
-
     /**
      * Constructor.
      */
@@ -46,7 +44,7 @@ class ProjectServiceContainer extends Container
      * This service is shared.
      * This method always returns the same instance of the service.
      *
-     * @return \stdClass A stdClass instance.
+     * @return stdClass A stdClass instance.
      */
     protected function getTestService()
     {
@@ -86,7 +84,7 @@ class ProjectServiceContainer extends Container
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getParameterBag()
     {

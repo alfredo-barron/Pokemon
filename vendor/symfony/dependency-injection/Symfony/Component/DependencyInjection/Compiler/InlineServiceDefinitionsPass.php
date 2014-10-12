@@ -30,7 +30,7 @@ class InlineServiceDefinitionsPass implements RepeatablePassInterface
     private $currentId;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setRepeatedPass(RepeatedPass $repeatedPass)
     {
@@ -61,11 +61,6 @@ class InlineServiceDefinitionsPass implements RepeatablePassInterface
 
             $definition->setProperties(
                 $this->inlineArguments($container, $definition->getProperties())
-            );
-
-            $configurator = $this->inlineArguments($container, array($definition->getConfigurator()));
-            $definition->setConfigurator(
-                $configurator[0]
             );
         }
     }
@@ -114,7 +109,7 @@ class InlineServiceDefinitionsPass implements RepeatablePassInterface
      * @param string           $id
      * @param Definition       $definition
      *
-     * @return bool    If the definition is inlineable
+     * @return Boolean If the definition is inlineable
      */
     private function isInlineableDefinition(ContainerBuilder $container, $id, Definition $definition)
     {

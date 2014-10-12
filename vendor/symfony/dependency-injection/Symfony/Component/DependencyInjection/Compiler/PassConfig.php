@@ -46,7 +46,6 @@ class PassConfig
 
         $this->optimizationPasses = array(
             new ResolveDefinitionTemplatesPass(),
-            new DecoratorServicePass(),
             new ResolveParameterPlaceHoldersPass(),
             new CheckDefinitionValidityPass(),
             new ResolveReferencesToAliasesPass(),

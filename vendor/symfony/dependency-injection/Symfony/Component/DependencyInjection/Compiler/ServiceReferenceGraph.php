@@ -33,7 +33,7 @@ class ServiceReferenceGraph
      *
      * @param string $id Id to check
      *
-     * @return bool
+     * @return Boolean
      */
     public function hasNode($id)
     {

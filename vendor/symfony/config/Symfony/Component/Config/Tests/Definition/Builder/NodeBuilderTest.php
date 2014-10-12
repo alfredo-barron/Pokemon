@@ -45,7 +45,7 @@ class NodeBuilderTest extends \PHPUnit_Framework_TestCase
             ->setNodeClass('newtype', $class)
             ->node('', 'newtype');
 
-        $this->assertInstanceOf($class, $node);
+        $this->assertEquals(get_class($node), $class);
     }
 
     public function testOverridingAnExistingNodeType()
@@ -57,7 +57,7 @@ class NodeBuilderTest extends \PHPUnit_Framework_TestCase
             ->setNodeClass('variable', $class)
             ->node('', 'variable');
 
-        $this->assertInstanceOf($class, $node);
+        $this->assertEquals(get_class($node), $class);
     }
 
     public function testNodeTypesAreNotCaseSensitive()
@@ -67,25 +67,25 @@ class NodeBuilderTest extends \PHPUnit_Framework_TestCase
         $node1 = $builder->node('', 'VaRiAbLe');
         $node2 = $builder->node('', 'variable');
 
-        $this->assertInstanceOf(get_class($node1), $node2);
+        $this->assertEquals(get_class($node1), get_class($node2));
 
         $builder->setNodeClass('CuStOm', __NAMESPACE__.'\\SomeNodeDefinition');
 
         $node1 = $builder->node('', 'CUSTOM');
         $node2 = $builder->node('', 'custom');
 
-        $this->assertInstanceOf(get_class($node1), $node2);
+        $this->assertEquals(get_class($node1), get_class($node2));
     }
 
     public function testNumericNodeCreation()
     {
-        $builder = new BaseNodeBuilder();
+        $builder = new NodeBuilder();
 
         $node = $builder->integerNode('foo')->min(3)->max(5);
-        $this->assertInstanceOf('Symfony\Component\Config\Definition\Builder\IntegerNodeDefinition', $node);
+        $this->assertEquals('Symfony\Component\Config\Definition\Builder\IntegerNodeDefinition', get_class($node));
 
         $node = $builder->floatNode('bar')->min(3.0)->max(5.0);
-        $this->assertInstanceOf('Symfony\Component\Config\Definition\Builder\FloatNodeDefinition', $node);
+        $this->assertEquals('Symfony\Component\Config\Definition\Builder\FloatNodeDefinition', get_class($node));
     }
 }
 

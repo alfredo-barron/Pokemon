@@ -31,7 +31,7 @@ class VariableNodeDefinition extends NodeDefinition
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function createNode()
     {
@@ -61,4 +61,5 @@ class VariableNodeDefinition extends NodeDefinition
 
         return $node;
     }
+
 }

@@ -33,7 +33,6 @@ class Command
 {
     private $application;
     private $name;
-    private $processTitle;
     private $aliases = array();
     private $definition;
     private $help;
@@ -134,7 +133,7 @@ class Command
      * Override this to check for x or y and return false if the command can not
      * run properly under the current conditions.
      *
-     * @return bool
+     * @return Boolean
      */
     public function isEnabled()
     {
@@ -159,7 +158,7 @@ class Command
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
-     * @return null|int     null or 0 if everything went fine, or an error code
+     * @return null|integer null or 0 if everything went fine, or an error code
      *
      * @throws \LogicException When this abstract method is not implemented
      * @see    setCode()
@@ -202,7 +201,7 @@ class Command
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
-     * @return int     The command exit code
+     * @return integer The command exit code
      *
      * @throws \Exception
      *
@@ -229,16 +228,6 @@ class Command
         }
 
         $this->initialize($input, $output);
-
-        if (null !== $this->processTitle) {
-            if (function_exists('cli_set_process_title')) {
-                cli_set_process_title($this->processTitle);
-            } elseif (function_exists('setproctitle')) {
-                setproctitle($this->processTitle);
-            } elseif (OutputInterface::VERBOSITY_VERY_VERBOSE === $output->getVerbosity()) {
-                $output->writeln('<comment>Install the proctitle PECL to be able to change the process title.</comment>');
-            }
-        }
 
         if ($input->isInteractive()) {
             $this->interact($input, $output);
@@ -287,7 +276,7 @@ class Command
      *
      * This method is not part of public API and should not be used directly.
      *
-     * @param bool    $mergeArgs Whether to merge or not the Application definition arguments to Command definition arguments
+     * @param Boolean $mergeArgs Whether to merge or not the Application definition arguments to Command definition arguments
      */
     public function mergeApplicationDefinition($mergeArgs = true)
     {
@@ -362,7 +351,7 @@ class Command
      * Adds an argument.
      *
      * @param string  $name        The argument name
-     * @param int     $mode        The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
+     * @param integer $mode        The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
      * @param string  $description A description text
      * @param mixed   $default     The default value (for InputArgument::OPTIONAL mode only)
      *
@@ -382,7 +371,7 @@ class Command
      *
      * @param string  $name        The option name
      * @param string  $shortcut    The shortcut (can be null)
-     * @param int     $mode        The option mode: One of the InputOption::VALUE_* constants
+     * @param integer $mode        The option mode: One of the InputOption::VALUE_* constants
      * @param string  $description A description text
      * @param mixed   $default     The default value (must be null for InputOption::VALUE_REQUIRED or InputOption::VALUE_NONE)
      *
@@ -418,25 +407,6 @@ class Command
         $this->validateName($name);
 
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Sets the process title of the command.
-     *
-     * This feature should be used only when creating a long process command,
-     * like a daemon.
-     *
-     * PHP 5.5+ or the proctitle PECL library is required
-     *
-     * @param string $title The process title
-     *
-     * @return Command The current instance
-     */
-    public function setProcessTitle($title)
-    {
-        $this->processTitle = $title;
 
         return $this;
     }
@@ -521,11 +491,11 @@ class Command
 
         $placeholders = array(
             '%command.name%',
-            '%command.full_name%',
+            '%command.full_name%'
         );
         $replacements = array(
             $name,
-            $_SERVER['PHP_SELF'].' '.$name,
+            $_SERVER['PHP_SELF'].' '.$name
         );
 
         return str_replace($placeholders, $replacements, $this->getHelp());
@@ -534,7 +504,7 @@ class Command
     /**
      * Sets the aliases for the command.
      *
-     * @param string[] $aliases An array of aliases for the command
+     * @param array $aliases An array of aliases for the command
      *
      * @return Command The current instance
      *
@@ -544,10 +514,6 @@ class Command
      */
     public function setAliases($aliases)
     {
-        if (!is_array($aliases) && !$aliases instanceof \Traversable) {
-            throw new \InvalidArgumentException('$aliases must be an array or an instance of \Traversable');
-        }
-
         foreach ($aliases as $alias) {
             $this->validateName($alias);
         }
@@ -618,7 +584,7 @@ class Command
     /**
      * Returns an XML representation of the command.
      *
-     * @param bool    $asDom Whether to return a DOM or an XML string
+     * @param Boolean $asDom Whether to return a DOM or an XML string
      *
      * @return string|\DOMDocument An XML string representing the command
      *
