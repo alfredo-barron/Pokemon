@@ -9,4 +9,11 @@
       <img src="{{ urlFor('root') }}public/img/Mudkip.png" alt="Mudkip" class="img-rounded">
     </div>
   </div>
+<ul>
+{% for c in centros %}
+  <li> {{ c.nombre }} {{ c.id }} {{ c.password }} {{ c.regiones.nombre }} </li>
+{% else %}
+  <li>Nameless!</li>
+{% endfor %}
+</ul>
 {% endblock %}
