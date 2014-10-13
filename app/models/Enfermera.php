@@ -1,5 +1,5 @@
 <?php
-class Enfermeras extends Elegant {
+class Enfermera extends Elegant {
   protected $rules = array(
   );
 

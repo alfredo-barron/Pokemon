@@ -40,7 +40,7 @@ $app->post('/login', function() use($app){
   $password = (isset($post->password)) ? $post->password : '';
 
   $errors = array();
-  $centro_pokemon = Centros_Pokemon::where('nombre','=',$nombre)->first();
+  $centro_pokemon = Centro_Pokemon::where('nombre','=',$nombre)->first();
   if(!is_null($centro_pokemon)){
     if($centro_pokemon->password == $password){
       $_SESSION['user'] = $centro_pokemon;

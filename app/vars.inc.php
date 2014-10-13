@@ -1,6 +1,6 @@
 <?php
 define('TITLE', 'Pokémon');
-// Database
+// Database servidor
 define('DB_DRIVER', 'pgsql');//mysql,pgsql
 define('DB_HOST', 'ec2-54-204-43-139.compute-1.amazonaws.com');
 define('DB_PORT', '5432');
@@ -8,6 +8,13 @@ define('DB_DATABASE', 'd5pl13aajkhqi0');
 define('DB_USERNAME', 'befgvmphhoesjl');
 define('DB_PASSWORD', 'v9Ylwt1iN8ocZhshwh4_z1Z4Dy');
 define('DB_PREFIX', '');
+// Database local
+define('DB_DRIVER_L', 'mysql');//mysql,pgsql
+define('DB_HOST_L', 'localhost');
+define('DB_DATABASE_L', 'centrospokemon');
+define('DB_USERNAME_L', 'root');
+define('DB_PASSWORD_L', 'root');
+define('DB_PREFIX_L', '');
 // Slim Vars
 define('COOKIE_PREFIX','pkmn');//Only lowercase letters[a-z], numbers[0-9] and _
 define('COOKIES_ENABLED', true);//If you need to store more than 4 kb set to false

@@ -12,10 +12,10 @@ $app->group('/inicio', $auth($app), function() use($app){
 
     $app->get('/regiones.json(/:id)', function($id = null) use($app){
       if($id == null){
-        $regiones = Regiones::all();
+        $regiones = Region::all();
         echo $regiones->toJson();
       }else {
-        $regiones = Regiones::where('id',$id)->first();
+        $regiones = Region::where('id',$id)->first();
         echo $regiones->toJson();
       }
     });
@@ -27,10 +27,10 @@ $app->group('/inicio', $auth($app), function() use($app){
 
     $app->get('/enfermeras.json(/:id)', function($id = null) use($app){
       if ($id == null) {
-        $enfermeras = Enfermeras::all();
+        $enfermeras = Enfermera::all();
         echo $enfermeras->toJson();
       }else {
-        $enfermeras = Enfermeras::where('id',$id)->first();
+        $enfermeras = Enfermera::where('id',$id)->first();
         echo $enfermeras->toJson();
       }
     })->name('enfermeras');
@@ -42,10 +42,10 @@ $app->group('/inicio', $auth($app), function() use($app){
 
     $app->get('/entrenadores.json(/:id)', function($id = null) use($app){
       if ($id == null) {
-        $entrenadores = Entrenadores::all();
+        $entrenadores = Entrenador::all();
         echo $entrenadores->toJson();
       }else {
-        $entrenadores = Entrenadores::where('id',$id)->first();
+        $entrenadores = Entrenador::where('id',$id)->first();
         echo $entrenadores->toJson();
       }
     })->name('entrenadores');
