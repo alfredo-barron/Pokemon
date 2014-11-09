@@ -55,25 +55,21 @@ $app->get('/', function() use($app){
 
 $app->post('/login', function() use($app){
   $post = (object) $app->request()->post();
-  $nombre = (isset($post->nombre)) ? $post->nombre : '';
+  $usuario = (isset($post->usuario)) ? $post->usuario : '';
   $password = (isset($post->password)) ? $post->password : '';
 
   $errors = array();
-  $centro_pokemon = Centro_Pokemon::where('nombre','=',$nombre)->first();
-  if(!is_null($centro_pokemon)){
-    if($centro_pokemon->password == $password){
-      $_SESSION['user'] = $centro_pokemon;
+  $entrenador = Entrenador::where('usuario','=',$usuario)->first();
+  if(!is_null($entrenador)){
+    if($entrenador->password == $password){
+      $_SESSION['user'] = $entrenador;
     } else {
-      $errors['password'] = $app->lang->passwordError;
+      echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña Incorrecta'));
     }
   } else {
-    $app->flash('nombre', $nombre);
+    echo json_encode(array('estado' => false, 'mensaje' => 'Usuario Incorrecto'));
   }
-
-  if(count($errors) > 0) {
-    $app->redirect($app->urlFor('login'));
-  }
-
+  echo json_encode(array('estado' => true, 'mensaje' => 'Sesión Iniciada'));
   $app->redirect($app->urlFor('home'));
 })->name('login-post');
 
