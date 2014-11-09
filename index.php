@@ -58,10 +58,11 @@ $app->post('/login', function() use($app){
   $usuario = (isset($post->usuario)) ? $post->usuario : '';
   $password = (isset($post->password)) ? $post->password : '';
 
-  $errors = array();
   $entrenador = Entrenador::where('usuario','=',$usuario)->first();
+
   if(!is_null($entrenador)){
     if($entrenador->password == $password){
+      echo json_encode(array('estado' => true, 'mensaje' => 'Sesión Iniciada'));
       $_SESSION['user'] = $entrenador;
     } else {
       echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña Incorrecta'));
@@ -69,7 +70,7 @@ $app->post('/login', function() use($app){
   } else {
     echo json_encode(array('estado' => false, 'mensaje' => 'Usuario Incorrecto'));
   }
-  echo json_encode(array('estado' => true, 'mensaje' => 'Sesión Iniciada'));
+
 });
 
 $app->get('/logout', function() use($app){
