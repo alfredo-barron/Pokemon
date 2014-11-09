@@ -70,8 +70,7 @@ $app->post('/login', function() use($app){
     echo json_encode(array('estado' => false, 'mensaje' => 'Usuario Incorrecto'));
   }
   echo json_encode(array('estado' => true, 'mensaje' => 'Sesión Iniciada'));
-  $app->redirect($app->urlFor('home'));
-})->name('login-post');
+});
 
 $app->get('/logout', function() use($app){
   unset($_SESSION['user']);
