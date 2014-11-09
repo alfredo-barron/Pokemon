@@ -143,16 +143,6 @@ $app->get('/pokebolas(/:id)', function($id = null) use($app){
   }
 });
 
-$app->get('/entrenadores(/:id)', function($id = null) use($app){
-  if($id == null){
-    $entrenadores = Entrenador::all();
-    echo $entrenadores->toJson();
-  }else{
-    $entrenador = Entrenador::where('id',$id)->first();
-    echo $entrenador->toJson();
-  }
-});
-
 $app->get('/regeneradores(/:id)', function($id = null) use($app){
   if($id == null){
     $regeneradores = Regenerador::all();
