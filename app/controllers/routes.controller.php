@@ -111,7 +111,7 @@ $app->post('/entrenadores', function() use($app) {
   $entrenador->fecha_nacimiento = $post->fecha_nacimiento;
   $entrenador->lugar_nacimiento = $post->lugar_nacimiento;
   $entrenador->sexo = $post->sexo;
-  $entrenador->es_lider = $post->es_lider
+  $entrenador->es_lider = $post->es_lider;
   $entrenador->localizacion_actual = $post->localizacion_actual;
   $entrenador->save();
 
