@@ -1,7 +1,8 @@
 <?php
 session_cache_limiter(false);
-session_start();
+@session_start();
 date_default_timezone_set('America/Mexico_City');
+
 require 'vendor/autoload.php';
 include_once 'app/vars.inc.php';
 include_once APP_FOLDER.'config.php';
@@ -22,6 +23,8 @@ $auth = function ($app) {
   };
 };
 
+$app->contentType('text/html; charset=utf-8');
+
 $app->hook('slim.before.dispatch', function() use ($app) {
   $user = null;
   if(isset($_SESSION['user'])) {
@@ -31,7 +34,8 @@ $app->hook('slim.before.dispatch', function() use ($app) {
 });
 
 $app->get('/', function() use($app){
-  $app->render('index.twig');
+  //$app->render('index.twig');
+  echo "Pokémon";
 })->name('root');
 
 $app->post('/login', function() use($app){
