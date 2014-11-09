@@ -113,7 +113,6 @@ $app->post('/entrenadores', function() use($app) {
   $entrenador->sexo = $post->entrenador;
   $entrenador->es_lider = $post->es_lider
   $entrenador->localizacion_actual = $post->localizacion_actual;
-  $entrenador->suspendido = 1;
   $entrenador->save();
 
   if (!$entrenador) {
