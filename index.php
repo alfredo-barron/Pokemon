@@ -35,7 +35,7 @@ $app->hook('slim.before.dispatch', function() use ($app) {
 
 $app->get('/', function() use($app){
   //$app->render('index.twig');
-  echo "Pokémon";
+  echo "<a href=\"/regiones\">GET \regiones</a>";
 })->name('root');
 
 $app->post('/login', function() use($app){
