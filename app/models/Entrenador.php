@@ -3,13 +3,12 @@ class Entrenador extends Elegant {
 
   protected $table = 'entrenadores';
 
-  protected $rules = array(
-  );
-/*
-  public function region(){
-    return $this->belongsTo('Region');
+  public function lugar_nacimiento() {
+    return $this->belongsTo('Region','lugar_nacimiento');
   }
-*/
 
+  public function localizacion_actual() {
+    return $this->belongsTo('Region','localizacion_actual');
+  }
 
 }

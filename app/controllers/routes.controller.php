@@ -12,10 +12,10 @@ $app->get('/regiones(/:id)', function($id = null) use($app){
 
 $app->get('/centros(/:id)', function($id = null) use($app){
   if($id == null){
-    $centros = Centro_Pokemon::all();;
+    $centros = Centro_Pokemon::with('id_region')->get();;
     echo $centros->toJson();
   }else{
-    $status = Centro_Pokemon::where('id',$id)->first();
+    $status = Centro_Pokemon::with('id_region')->where('id',$id)->first();
     echo $status->toJson();
   }
 });
@@ -92,10 +92,10 @@ $app->get('/evoluciones(/:id)', function($id = null) use($app){
 
 $app->get('/entrenadores(/:id)', function($id = null) use($app){
   if($id == null){
-    $entrenadores = Entrenador::all();
+    $entrenadores = Entrenador::with('lugar_nacimiento','localizacion_actual')->get();
     echo $entrenadores->toJson();
   }else{
-    $entrenador = Entrenador::where('id',$id)->first();
+    $entrenador = Entrenador::with('lugar_nacimiento','localizacion_actual')->where('id',$id)->first();
     echo $entrenador->toJson();
   }
 });

@@ -2,9 +2,9 @@
 class Centro_Pokemon extends Elegant {
 
   protected $table = 'centros_pokemon';
-/*
-  public function region(){
-    return $this->belongsTo('Region');
+
+  public function id_region() {
+    return $this->belongsTo('Region','id_region');
   }
-*/
+
 }
