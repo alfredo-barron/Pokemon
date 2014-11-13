@@ -62,7 +62,7 @@ $app->post('/login', function() use($app){
 
   if(!is_null($entrenador)){
     if($entrenador->password == $password){
-      echo json_encode(array('estado' => true, 'mensaje' => 'Sesión iniciada'));
+      echo json_encode($entrenador);
       $_SESSION['user'] = $entrenador;
     } else {
       echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña incorrecta'));
