@@ -62,13 +62,13 @@ $app->post('/login', function() use($app){
 
   if(!is_null($entrenador)){
     if($entrenador->password == $password){
-      echo json_encode(array('estado' => true, 'mensaje' => 'Sesión Iniciada'));
+      echo json_encode(array('estado' => true, 'mensaje' => 'Sesión iniciada'));
       $_SESSION['user'] = $entrenador;
     } else {
-      echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña Incorrecta'));
+      echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña incorrecta'));
     }
   } else {
-    echo json_encode(array('estado' => false, 'mensaje' => 'Usuario Incorrecto'));
+    echo json_encode(array('estado' => false, 'mensaje' => 'Usuario incorrecto'));
   }
 
 });
@@ -76,7 +76,6 @@ $app->post('/login', function() use($app){
 $app->get('/logout', function() use($app){
   unset($_SESSION['user']);
   $app->view()->setData('user', null);
-  $app->redirect($app->urlFor('root'));
 })->name('logout');
 
 //Load all the controllers
