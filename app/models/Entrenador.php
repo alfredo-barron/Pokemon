@@ -5,5 +5,11 @@ class Entrenador extends Elegant {
 
   protected $rules = array(
   );
+/*
+  public function region(){
+    return $this->belongsTo('Region');
+  }
+*/
+
 
 }

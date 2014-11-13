@@ -6,4 +6,9 @@ class Catalogo_Tipo extends Elegant {
   protected $rules = array(
   );
 
+  public function tipos(){
+        return $this->hasManyThrough('Catalogo_Tipo', 'Catologo_Pokemon');
+    }
+
+
 }

@@ -12,7 +12,7 @@ $app->get('/regiones(/:id)', function($id = null) use($app){
 
 $app->get('/centros(/:id)', function($id = null) use($app){
   if($id == null){
-    $centros = Centro_Pokemon::all();
+    $centros = Centro_Pokemon::all();;
     echo $centros->toJson();
   }else{
     $status = Centro_Pokemon::where('id',$id)->first();

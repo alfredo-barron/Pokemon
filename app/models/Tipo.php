@@ -6,4 +6,6 @@ class Tipo extends Elegant {
   protected $rules = array(
   );
 
+
+
 }
