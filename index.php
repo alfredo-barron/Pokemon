@@ -35,22 +35,22 @@ $app->hook('slim.before.dispatch', function() use ($app) {
 
 $app->get('/', function() use($app){
   //$app->render('index.twig');
-  echo "<a href=\"/regiones\">GET (/regiones)</a><br>";
-  echo "<a href=\"/centros\">GET (/centros)</a><br>";
-  echo "<a href=\"/catalogo_tipos\">GET (/catalogo_tipos)</a><br>";
-  echo "<a href=\"/catalogo_habilidades\">GET (/catalogo_habilidades)</a><br>";
-  echo "<a href=\"/catalogo_estatus\">GET (/catalogo_estatus)</a><br>";
-  echo "<a href=\"/catalogo_pokemon\">GET (/catalogo_pokemon)</a><br>";
-  echo "<a href=\"/habilidades\">GET (/habilidades)</a><br>";
-  echo "<a href=\"/tipos\">GET (/tipos)</a><br>";
-  echo "<a href=\"/evoluciones\">GET (/evoluciones)</a><br>";
-  echo "<a href=\"/entrenadores\">GET (/entrenadores)</a><br>";
-  echo "<a href=\"/pokemon\">GET (/pokemon)</a><br>";
-  echo "<a href=\"/pokebolas\">GET (/pokebolas)</a><br>";
-  echo "<a href=\"/regeneradores\">GET (/regeneradores)</a><br>";
-  echo "<a href=\"/registro\">GET (/registro)</a><br>";
-  echo "<a href=\"/habitaciones\">GET (/habitaciones)</a><br>";
-  echo "<a href=\"/camas\">GET (/camas)</a><br>";
+  echo "<a href=\"./regiones\">GET (/regiones)</a><br>";
+  echo "<a href=\"./centros\">GET (/centros)</a><br>";
+  echo "<a href=\"./catalogo_tipos\">GET (/catalogo_tipos)</a><br>";
+  echo "<a href=\"./catalogo_habilidades\">GET (/catalogo_habilidades)</a><br>";
+  echo "<a href=\"./catalogo_estatus\">GET (/catalogo_estatus)</a><br>";
+  echo "<a href=\"./catalogo_pokemon\">GET (/catalogo_pokemon)</a><br>";
+  echo "<a href=\"./habilidades\">GET (/habilidades)</a><br>";
+  echo "<a href=\"./tipos\">GET (/tipos)</a><br>";
+  echo "<a href=\"./evoluciones\">GET (/evoluciones)</a><br>";
+  echo "<a href=\"./entrenadores\">GET (/entrenadores)</a><br>";
+  echo "<a href=\"./pokemon\">GET (/pokemon)</a><br>";
+  echo "<a href=\"./pokebolas\">GET (/pokebolas)</a><br>";
+  echo "<a href=\"./regeneradores\">GET (/regeneradores)</a><br>";
+  echo "<a href=\"./registro\">GET (/registro)</a><br>";
+  echo "<a href=\"./habitaciones\">GET (/habitaciones)</a><br>";
+  echo "<a href=\"./camas\">GET (/camas)</a><br>";
 })->name('root');
 
 $app->post('/login', function() use($app){
