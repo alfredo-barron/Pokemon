@@ -11,4 +11,8 @@ class Region extends Elegant {
     return $this->hasMany('Entrenador');
   }
 
+  public function catalogo_pokemon(){
+    return $this->hasMany('Catalogo_Pokemon');
+  }
+
 }

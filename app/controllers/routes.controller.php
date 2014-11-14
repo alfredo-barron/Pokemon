@@ -12,7 +12,7 @@ $app->get('/regiones(/:id)', function($id = null) use($app){
 
 $app->get('/centros(/:id)', function($id = null) use($app){
   if($id == null){
-    $centros = Centro_Pokemon::with('id_region')->get();;
+    $centros = Centro_Pokemon::with('id_region')->get();
     echo $centros->toJson();
   }else{
     $status = Centro_Pokemon::with('id_region')->where('id',$id)->first();
@@ -52,10 +52,10 @@ $app->get('/catalogo_estatus(/:id)', function($id = null) use($app){
 
 $app->get('/catalogo_pokemon(/:id)', function($id = null) use($app){
   if($id == null){
-    $catalogo_pokemons = Catalogo_Pokemon::all();
+    $catalogo_pokemons = Catalogo_Pokemon::with('region')->get();
     echo $catalogo_pokemons->toJson();
   }else{
-    $catalogo_pokemon = Catalogo_Pokemon::where('id',$id)->first();
+    $catalogo_pokemon = Catalogo_Pokemon::with('region')->where('id',$id)->first();
     echo $catalogo_pokemon->toJson();
   }
 });

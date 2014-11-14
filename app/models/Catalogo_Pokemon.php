@@ -3,7 +3,8 @@ class Catalogo_Pokemon extends Elegant {
 
   protected $table = 'catalogo_pokemon';
 
-  protected $rules = array(
-  );
+  public function region() {
+    return $this->belongsTo('Region','region');
+  }
 
 }
