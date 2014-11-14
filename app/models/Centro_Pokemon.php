@@ -7,4 +7,8 @@ class Centro_Pokemon extends Elegant {
     return $this->belongsTo('Region','id_region');
   }
 
+  public function regenerador(){
+    return $this->hasMany('Regenerador');
+  }
+
 }

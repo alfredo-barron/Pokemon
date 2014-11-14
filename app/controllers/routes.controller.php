@@ -145,10 +145,10 @@ $app->get('/pokebolas(/:id)', function($id = null) use($app){
 
 $app->get('/regeneradores(/:id)', function($id = null) use($app){
   if($id == null){
-    $regeneradores = Regenerador::all();
+    $regeneradores = Regenerador::with('id_centro_pokemon')->get();
     echo $regeneradores->toJson();
   }else{
-    $regenerador = Regenerador::where('id',$id)->first();
+    $regenerador = Regenerador::with('id_centro_pokemon')->where('id',$id)->first();
     echo $regenerador->toJson();
   }
 });
