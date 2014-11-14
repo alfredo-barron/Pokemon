@@ -165,10 +165,10 @@ $app->get('/registros(/:id)', function($id = null) use($app){
 
 $app->get('/habitaciones(/:id)', function($id = null) use($app){
   if($id == null){
-    $habitaciones = Habitacion::all();
+    $habitaciones = Habitacion::with('id_centro_pokemon')->get();
     echo $habitaciones->toJson();
   }else{
-    $habitacion = Habitacion::where('id',$id)->first();
+    $habitacion = Habitacion::with('id_centro_pokemon')->where('id',$id)->first();
     echo $habitacion->toJson();
   }
 });

@@ -3,7 +3,8 @@ class Habitacion extends Elegant {
 
   protected $table = 'habitaciones';
 
-  protected $rules = array(
-  );
+  public function id_centro_pokemon() {
+    return $this->belongsTo('Centro_Pokemon','id_centro_pokemon');
+  }
 
 }

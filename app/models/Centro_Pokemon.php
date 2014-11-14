@@ -11,4 +11,8 @@ class Centro_Pokemon extends Elegant {
     return $this->hasMany('Regenerador');
   }
 
+  public function habitacion(){
+    return $this->hasMany('Habitacion');
+  }
+
 }
