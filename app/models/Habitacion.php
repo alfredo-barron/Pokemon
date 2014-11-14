@@ -7,4 +7,8 @@ class Habitacion extends Elegant {
     return $this->belongsTo('Centro_Pokemon','id_centro_pokemon');
   }
 
+   public function cama(){
+    return $this->hasOne('Cama');
+  }
+
 }

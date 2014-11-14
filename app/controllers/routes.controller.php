@@ -32,7 +32,7 @@ $app->get('/catalogo_tipos(/:id)', function($id = null) use($app){
 
 $app->get('/catalogo_habilidades(/:id)', function($id = null) use($app){
   if($id == null){
-    $catalogo_habilidades = Catalogo_Habilidad::all();
+    $catalogo_habilidades = Catalogo_Habilidad::with('pokemon')->get();
     echo $catalogo_habilidades->toJson();
   }else{
     $catalogo_habilidad = Catalogo_Habilidad::where('id',$id)->first();
@@ -62,7 +62,7 @@ $app->get('/catalogo_pokemon(/:id)', function($id = null) use($app){
 
 $app->get('/habilidades(/:id)', function($id = null) use($app){
   if($id == null){
-    $habilidades = Habilidad::all();
+    $habilidades = Habilidad::with('id_habilidad','id_pokemon')->get();
     echo $habilidades->toJson();
   }else{
     $habilidad = Habilidad::where('id',$id)->first();
@@ -175,10 +175,10 @@ $app->get('/habitaciones(/:id)', function($id = null) use($app){
 
 $app->get('/camas(/:id)', function($id = null) use($app){
   if($id == null){
-    $camas = Cama::all();
+    $camas = Cama::with('id_habitacion','id_entrenador')->get();
     echo $camas->toJson();
   }else{
-    $cama = Cama::where('id',$id)->first();
+    $cama = Cama::with('id_habitacion','id_entrenador')->where('id',$id)->first();
     echo $cama->toJson();
   }
 });

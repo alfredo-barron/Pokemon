@@ -11,4 +11,8 @@ class Entrenador extends Elegant {
     return $this->belongsTo('Region','localizacion_actual');
   }
 
+  public function cama(){
+    return $this->hasOne('Cama');
+  }
+
 }
