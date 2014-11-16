@@ -1,5 +1,6 @@
 <?php
 class Regenerator extends Elegant {
+  protected $table = 'regenerators';
   protected $rules = array(
   );
   //Se une con centro pokemon

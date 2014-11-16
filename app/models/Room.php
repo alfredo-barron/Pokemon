@@ -1,5 +1,6 @@
 <?php
 class Room extends Elegant {
+  protected $table = 'rooms';
   protected $rules = array(
   );
   //Se une con los centros pokemon

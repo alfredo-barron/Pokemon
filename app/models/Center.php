@@ -1,5 +1,6 @@
 <?php
 class Center extends Elegant {
+  protected $table = 'centers';
   protected $rules = array(
   );
   //Muchos regeneradores en un centro pokemon

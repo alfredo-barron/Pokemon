@@ -1,5 +1,6 @@
 <?php
 class Trainer extends Elegant {
+  protected $table = 'trainers';
   protected $rules = array(
   );
   //Se une con regiones
