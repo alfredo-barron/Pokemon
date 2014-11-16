@@ -1,6 +1,6 @@
 <?php
 class Pokemon extends Elegant {
-
+  protected $table = 'pokemons';
   protected $rules = array(
   );
 

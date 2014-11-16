@@ -1,5 +1,6 @@
 <?php
 class Evolution extends Elegant {
+  protected $table = 'evolutions';
   protected $rules = array(
   );
 
