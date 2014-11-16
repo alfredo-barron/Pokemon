@@ -57,8 +57,8 @@ $app->get('/status(/:id)', function($id = null) use($app){
 
 $app->get('/pokemon(/:id)', function($id = null) use($app){
   if($id == null){
-    $pokemons = Pokemon::with('region_id')->get();
-    echo $pokemons->toJson();
+    $pokemon = Pokemon::all();
+    echo $pokemon->toJson();
   }else{
     $pokemon = Pokemon::with('region_id')->where('id',$id)->first();
     echo $pokemon->toJson();
