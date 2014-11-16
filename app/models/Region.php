@@ -1,5 +1,6 @@
 <?php
 class Region extends Elegant {
+  protected $table = 'regions';
   protected $rules = array(
   );
   //Puede tener un centro pokemon
