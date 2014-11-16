@@ -1,18 +1,18 @@
 <?php
 class Region extends Elegant {
-
-  protected $table = 'regiones';
-
-  public function centros_pokemon(){
-    return $this->hasMany('Centro_Pokemon');
+  protected $rules = array(
+  );
+  //Puede tener un centro pokemon
+  public function centers(){
+    return $this->hasMany('Center');
   }
-
-  public function entrenador(){
-    return $this->hasMany('Entrenador');
+  //Puede tener un solo entrenador
+  public function trainers(){
+    return $this->hasMany('Trainer');
   }
-
-  public function catalogo_pokemon(){
-    return $this->hasMany('Catalogo_Pokemon');
+  //Puede tener muchos pokemons
+  public function pokemons(){
+    return $this->hasMany('Pokemon');
   }
 
 }

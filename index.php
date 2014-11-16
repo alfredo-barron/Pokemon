@@ -35,42 +35,31 @@ $app->hook('slim.before.dispatch', function() use ($app) {
 
 $app->get('/', function() use($app){
   //$app->render('index.twig');
-  echo "<a href=\"./regiones\">GET (/regiones)</a><br>";
-  echo "<a href=\"./centros\">GET (/centros)</a><br>";
-  echo "<a href=\"./catalogo_tipos\">GET (/catalogo_tipos)</a><br>";
-  echo "<a href=\"./catalogo_habilidades\">GET (/catalogo_habilidades)</a><br>";
-  echo "<a href=\"./catalogo_estatus\">GET (/catalogo_estatus)</a><br>";
-  echo "<a href=\"./catalogo_pokemon\">GET (/catalogo_pokemon)</a><br>";
-  echo "<a href=\"./habilidades\">GET (/habilidades)</a><br>";
-  echo "<a href=\"./tipos\">GET (/tipos)</a><br>";
-  echo "<a href=\"./evoluciones\">GET (/evoluciones)</a><br>";
-  echo "<a href=\"./entrenadores\">GET (/entrenadores)</a><br>";
-  echo "<a href=\"./pokemon\">GET (/pokemon)</a><br>";
-  echo "<a href=\"./pokebolas\">GET (/pokebolas)</a><br>";
-  echo "<a href=\"./regeneradores\">GET (/regeneradores)</a><br>";
-  echo "<a href=\"./registro\">GET (/registro)</a><br>";
-  echo "<a href=\"./habitaciones\">GET (/habitaciones)</a><br>";
-  echo "<a href=\"./camas\">GET (/camas)</a><br>";
+ echo "<h1>Pokémon Api</h1>";
 })->name('root');
 
 $app->post('/login', function() use($app){
   $post = (object) $app->request()->post();
-  $usuario = (isset($post->usuario)) ? $post->usuario : '';
+  $username = (isset($post->username)) ? $post->username : '';
   $password = (isset($post->password)) ? $post->password : '';
 
-  $entrenador = Entrenador::where('usuario','=',$usuario)->first();
+  $trainer = Trainer::where('username','=',$username)->first();
 
-  if(!is_null($entrenador)){
-    if($entrenador->password == $password){
-      echo json_encode($entrenador);
-      $_SESSION['user'] = $entrenador;
+  if(!is_null($trainer)){
+    if($trainer->password == $password){
+      $response['status'] = '0';
+      $response['id'] = $trainer->id;
+      $response['username'] = $trainer->username;
+      $response['name'] = $trainer->name;
+      $response['last_name'] = $trainer->last_name;
     } else {
-      echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña incorrecta'));
+      $response['status'] = '1';
     }
   } else {
-    echo json_encode(array('estado' => false, 'mensaje' => 'Usuario incorrecto'));
+    $response['status'] = '2';
   }
 
+  echo json_encode($response);
 });
 
 $app->get('/logout', function() use($app){

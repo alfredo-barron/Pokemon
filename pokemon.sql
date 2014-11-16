@@ -1,165 +1,179 @@
-
-create table regiones(
+--Regiones
+create table regions(
   id serial primary key,
-  nombre text not null
+  name text not null
+);
+
+--UNO A UNO
+--Centros Pokemon
+create table centers(
+  id serial primary key,
+  name text not null,
+  region_id int not null,
+  available boolean default '1',
+  foreign key (region_id) references regions(id)
+);
+--Catalogo Tipos
+create table types(
+  id serial primary key,
+  name text not null
+);
+--Catalogo Habilidades
+create table abilities(
+  id serial primary key,
+  name text not null
 );
 --Uno a muchos
-create table centros_pokemon(
+--Catalogo Pokemon
+create table pokemons(
   id serial primary key,
-  nombre text not null,
-  id_region int not null,
-  suspendido boolean default '1',
-  foreign key (id_region) references regiones(id)
-);
-
-create table catalogo_tipos(
-  id serial primary key,
-  nombre text not null
-);
-
-create table catalogo_habilidades(
-  id serial primary key,
-  nombre text not null
-);
---Uno a muchos
-create table catalogo_pokemon(
-  id serial primary key,
-  especie text not null,
-  imagen text not null,
-  region int not null,
+  species text not null,
+  image text not null,
+  region_id int not null,
   hit_points int not null,
-  ataque int not null,
-  defensa int not null,
-  velocidad int not null,
+  attack int not null,
+  defense int not null,
+  speed int not null,
   evasion int not null,
-  prezision int not null,
-  foreign key (region) references regiones(id)
+  accuracy int not null,
+  foreign key (region_id) references regions(id)
+);
+--Catalgo estatus
+create table statuses(
+  id serial primary key,
+  name text not null,
+  time int not null,
+  disappears int not null
+);
+--MUCHOS A MUCHOS
+--Habilidades
+create table pokemon_ability(
+  id serial primary key,
+  pokemon_id int not null,
+  ability_id int not null,
+  foreign key (pokemon_id) references pokemons(id),
+  foreign key (ability_id) references abilities(id)
+);
+--MUCHO A MUCHOS
+--Tipos
+create table pokemon_type(
+  id serial primary key,
+  pokemon_id int not null,
+  type_id int not null,
+  foreign key (pokemon_id) references pokemons(id),
+  foreign key (type_id) references types(id)
+);
+--UNO A UNO
+create table evolutions(
+  id serial primary key,
+  pokemon_id int not null,
+  pokemon_id_e int not null,
+  foreign key (pokemon_id) references pokemons(id),
+  foreign key (pokemon_id_e) references pokemons(id)
 );
 
-create table catalogo_estatus(
-  id serial primary key,
-  nombre text not null,
-  tiempo int not null,
-  desaparece_a int not null
-);
---Muchos a muchos
-create table habilidades(
-  id serial primary key,
-  id_pokemon int not null,
-  id_habilidad int not null,
-  foreign key (id_pokemon) references catalogo_pokemon(id),
-  foreign key (id_habilidad) references catalogo_habilidades(id)
-);
---Muchos a muchos
-create table tipos(
-  id serial primary key,
-  id_pokemon int not null,
-  id_tipo int not null,
-  foreign key (id_pokemon) references catalogo_pokemon(id),
-  foreign key (id_tipo) references catalogo_tipos(id)
-);
---Uno a uno
-create table evoluciones(
-  id serial primary key,
-  id_prevolucion int not null,
-  id_evolucion int not null,
-  foreign key (id_prevolucion) references catalogo_pokemon(id),
-  foreign key (id_evolucion) references catalogo_pokemon(id)
-);
 --Uno a muchos
-create table entrenadores(
+create table trainers(
   id serial primary key,
-  nombre text not null,
-  apellidos text not null,
-  imagen text not null,
-  usuario text not null,
+  name text not null,
+  last_name text not null,
+  image text not null,
+  username text not null,
   password text not null,
-  fecha_nacimiento date not null,
-  lugar_nacimiento int not null,
-  sexo text default 'Hombre',
-  es_lider boolean default '1',
-  localizacion_actual int not null,
-  suspendido boolean default '1',
-  foreign key (lugar_nacimiento) references regiones(id),
-  foreign key (localizacion_actual) references regiones(id)
+  birthday date not null,
+  region_id int not null,
+  gender text default 'Hombre',
+  leader boolean default '1',
+  region_id_actual int not null,
+  available boolean default '1',
+  foreign key (region_id) references regions(id),
+  foreign key (region_id_actual) references regions(id)
 );
---Uno a muchos
-create table pokemon(
+--UNO A MUCHOS (STATUS)
+--UNO A UNO (Pokemon)
+--Mis pokemones
+create table pokeballs(
   id serial primary key,
-  especie int not null,
+  pokemon_id int not null,
   alias text,
-  sexo text default 'Masculino',
-  nivel int not null,
+  gender text default 'Masculino',
+  level int not null,
   hit_points int not null,
-  ataque int not null,
-  defensa int not null,
-  velocidad int not null,
+  attack int not null,
+  defense int not null,
+  speed int not null,
   evasion int not null,
-  prezision int not null,
-  estatus int not null,
-  suspendido boolean default '1',
-  foreign key (especie) references catalogo_pokemon(id),
-  foreign key (estatus) references catalogo_estatus(id)
+  accuracy int not null,
+  status_id int not null,
+  available boolean default '1',
+  foreign key (pokemon_id) references pokemons(id),
+  foreign key (status_id) references statuses(id)
 );
---Muchos a muchos
-create table pokebolas(
+
+create table pokeball_trainer(
   id serial primary key,
-  id_entrenador int not null,
-  id_pokemon int not null,
-  suspendido boolean default '1',
-  foreign key (id_entrenador) references entrenadores(id),
-  foreign key (id_pokemon) references pokemon(id)
+  pokeball_id int not null,
+  trainer_id int not null,
+  foreign key (pokeball_id) references pokeballs(id),
+  foreign key (trainer_id) references trainers(id)
 );
+
 --Uno a muchos
-create table regeneradores(
+create table regenerators(
   id serial primary key,
   slots int not null default 50,
-  slots_funcionales int not null,
-  esta_mantenimiento boolean default '0',
-  id_centro_pokemon int not null,
-  suspendido boolean default '1',
-  foreign key (id_centro_pokemon) references centros_pokemon(id)
+  slots_functional int not null,
+  maintenance boolean default '0',
+  center_id int not null,
+  available boolean default '1',
+  foreign key (center_id) references centers(id)
 );
 --Muchos a muchos
-create table registros(
+create table regenerator_pokeball(
   id serial primary key,
-  fecha_entrada timestamp,
-  fecha_estimada timestamp,
-  fecha_salida timestamp,
-  id_regenerador int not null,
+  date_start timestamp,
+  date_estimated timestamp,
+  date_end timestamp,
+  regenerator_id int not null,
   hit_points int not null,
-  estatus int not null,
-  id_pokebola int not null,
-  suspendido boolean default '1',
-  foreign key (id_regenerador) references regeneradores(id),
-  foreign key (id_pokebola) references pokebolas(id)
+  status int not null,
+  pokeball_id int not null,
+  available boolean default '1',
+  foreign key (regenerator_id) references regenerators(id),
+  foreign key (pokeball_id) references pokeballs(id)
 );
 
-create table habitaciones(
+create table rooms(
   id serial primary key,
-  capacidad int not null,
-  id_centro_pokemon int not null,
-  suspendido boolean default '1',
-  foreign key (id_centro_pokemon) references centros_pokemon(id)
+  capacity int not null,
+  center_id int not null,
+  available boolean default '1',
+  foreign key (center_id) references centers(id)
 );
 
-create table camas(
+create table room_trainer(
   id serial primary key,
-  en_uso boolean default '0',
-  id_habitacion int not null,
-  id_entrenador int not null,
-  suspendido boolean default '1',
-  foreign key (id_habitacion) references habitaciones(id),
-  foreign key (id_entrenador) references entrenadores(id)
+  in_use boolean default '0',
+  room_id int not null,
+  trainer_id int not null,
+  available boolean default '1',
+  foreign key (room_id) references rooms(id),
+  foreign key (trainer_id) references trainers(id)
 );
 
 INSERT INTO regiones VALUES (1,'Kanto'),(2,'Jotho'),(3,'Sinnoh'),(4,'Hoenn'),(5,'Almia');
+INSERT INTO regions VALUES (1,'Kanto'),(2,'Jotho'),(3,'Sinnoh'),(4,'Hoenn'),(5,'Almia');
 
 INSERT INTO centros_pokemon VALUES (1,'Pokémon Verde',1,true),(2,'Pokémon Rojo',2,true),(3,'Pokémon Azul',3,true),(4,'Pokémon Amarillo',4,true),(5,'Pokémon Oro',5,true);
+INSERT INTO centers VALUES (1,'Pokémon Verde',1,true),(2,'Pokémon Rojo',2,true),(3,'Pokémon Azul',3,true),(4,'Pokémon Amarillo',4,true),(5,'Pokémon Oro',5,true);
+
+INSERT INTO centers VALUES (6,'Pokémon Amarillo',1,true);
 
 INSERT INTO catalogo_tipos VALUES (1,'Acero'),(2,'Agua'),(3,'Bicho'),(4,'Dragón'),(5,'Eléctrico'),(6,'Fantasma'),(7,'Fuego'),(8,'Hada'),(9,'Hielo'),(10,'Lucha'),(11,'Normal'),(12,'Planta'),(13,'Psíquico'),(14,'Roca'),(15,'Siniestro'),(16,'Tierra'),(17,'Veneno'),(18,'Volador'),(19,'???'),(20,'Pájaro'),(21,'Oscuro');
+INSERT INTO types VALUES (1,'Acero'),(2,'Agua'),(3,'Bicho'),(4,'Dragón'),(5,'Eléctrico'),(6,'Fantasma'),(7,'Fuego'),(8,'Hada'),(9,'Hielo'),(10,'Lucha'),(11,'Normal'),(12,'Planta'),(13,'Psíquico'),(14,'Roca'),(15,'Siniestro'),(16,'Tierra'),(17,'Veneno'),(18,'Volador'),(19,'???'),(20,'Pájaro'),(21,'Oscuro');
 
 INSERT INTO catalogo_habilidades VALUES (1,'Latigo Cepa'),(2,'Clorofila'),(3,'Mar Llamas'),(4,'Poder Solar'),(5,'Ascuas'),(6,'Torrente'),(7,'Cura Lluvia'),(8,'Hidro Bomba'),(9,'Demora'),(10,'Endurecer'),(11,'Esporas'),(12,'Polvo Escudo'),(13,'Mudar'),(14,'Enjambre'),(15,'Placaje'),(16,'Vista Lince'),(17,'Tormenta Arena'),(18,'Arañazo'),(19,'Placaje'),(20,'Agallas'),(21,'Picotazo'),(22,'Francotirador'),(23,'Intimidacion'),(24,'Veneno'),(25,'Trueno'),(26,'Pararayos'),(27,'Velo Arena'),(28,'Impetu Arena'),(29,'Entusiasmo'),(30,'Arañazo'),(31,'Ataque Tierra'),(32,'Picotazo Venenoso'),(33,'Megapuño'),(34,'Metronomo'),(35,'Agilidad'),(36,'Lanzallamas'),(37,'Sequia'),(38,'Gran Encanto'),(39,'Tenacidad'),(40,'Supersonico'),(41,'Foco'),(42,'Fuga'),(43,'Bomba Olor'),(44,'Esporas'),(45,'Picotazo Venenoso'),(46,'Humedad'),(47,'Placaje'),(48,'Polvo Sueño'),(49,'Dig'),(50,'Arena'),(51,'Arañazo'),(52,'Nerviosismo'),(53,'Confusion'),(54,'HydroPunch'),(55,'Furia'),(56,'Ira'),(57,'Gruñido'),(58,'Chorro Agua'),(59,'Absorber'),(60,'Teletransportacion'),(61,'Telequinesis'),(62,'Confusion'),(63,'Golpe Karate'),(64,'Golpe Roca'),(65,'Corpulencia'),(66,'Danza Caos'),(67,'Atraccion'),(68,'Hierva Lazo'),(69,'Cura Lluvia'),(70,'Rayo Aurora'),(71,'Avalancha'),(72,'Pisoton'),(73,'Daño Secreto'),(74,'Cola Agua'),(75,'Danza Lluvia'),(76,'Destello'),(77,'Onda Trueno'),(78,'Doble Filo'),(79,'Ladron'),(80,'Fly'),(81,'Viento Hielo'),(82,'Surf'),(83,'Mal de Ojo'),(84,'Residuos'),(85,'Chirrido'),(86,'Rayo Burbuja'),(87,'Tinieblas'),(88,'Maldicion'),(89,'Bola Sombra'),(90,'Atadura'),(91,'Hipnosis'),(92,'Confusion'),(93,'Garra Metal'),(94,'Corte'),(95,'Explosion'),(96,'Campana Cura'),(97,'Aromaterapia'),(98,'Recuperacion'),(99,'Cura Natural'),(100,'Dicha'),(101,'Alma Cura'),(102,'Regeneracion'),(103,'Espesura'),(104,'Pies Rapidos'),(105,'Gula'),(106,'Recogida'),(107,'Nado Rapido'),(108,'Madrugar'),(109,'Rastro'),(110,'Sincronia'),(111,'Ausente'),(112,'Espiritu Vital'),(113,'Velo Agua'),(114,'Foco Interno');
+INSERT INTO abilities VALUES (1,'Latigo Cepa'),(2,'Clorofila'),(3,'Mar Llamas'),(4,'Poder Solar'),(5,'Ascuas'),(6,'Torrente'),(7,'Cura Lluvia'),(8,'Hidro Bomba'),(9,'Demora'),(10,'Endurecer'),(11,'Esporas'),(12,'Polvo Escudo'),(13,'Mudar'),(14,'Enjambre'),(15,'Placaje'),(16,'Vista Lince'),(17,'Tormenta Arena'),(18,'Arañazo'),(19,'Placaje'),(20,'Agallas'),(21,'Picotazo'),(22,'Francotirador'),(23,'Intimidacion'),(24,'Veneno'),(25,'Trueno'),(26,'Pararayos'),(27,'Velo Arena'),(28,'Impetu Arena'),(29,'Entusiasmo'),(30,'Arañazo'),(31,'Ataque Tierra'),(32,'Picotazo Venenoso'),(33,'Megapuño'),(34,'Metronomo'),(35,'Agilidad'),(36,'Lanzallamas'),(37,'Sequia'),(38,'Gran Encanto'),(39,'Tenacidad'),(40,'Supersonico'),(41,'Foco'),(42,'Fuga'),(43,'Bomba Olor'),(44,'Esporas'),(45,'Picotazo Venenoso'),(46,'Humedad'),(47,'Placaje'),(48,'Polvo Sueño'),(49,'Dig'),(50,'Arena'),(51,'Arañazo'),(52,'Nerviosismo'),(53,'Confusion'),(54,'HydroPunch'),(55,'Furia'),(56,'Ira'),(57,'Gruñido'),(58,'Chorro Agua'),(59,'Absorber'),(60,'Teletransportacion'),(61,'Telequinesis'),(62,'Confusion'),(63,'Golpe Karate'),(64,'Golpe Roca'),(65,'Corpulencia'),(66,'Danza Caos'),(67,'Atraccion'),(68,'Hierva Lazo'),(69,'Cura Lluvia'),(70,'Rayo Aurora'),(71,'Avalancha'),(72,'Pisoton'),(73,'Daño Secreto'),(74,'Cola Agua'),(75,'Danza Lluvia'),(76,'Destello'),(77,'Onda Trueno'),(78,'Doble Filo'),(79,'Ladron'),(80,'Fly'),(81,'Viento Hielo'),(82,'Surf'),(83,'Mal de Ojo'),(84,'Residuos'),(85,'Chirrido'),(86,'Rayo Burbuja'),(87,'Tinieblas'),(88,'Maldicion'),(89,'Bola Sombra'),(90,'Atadura'),(91,'Hipnosis'),(92,'Confusion'),(93,'Garra Metal'),(94,'Corte'),(95,'Explosion'),(96,'Campana Cura'),(97,'Aromaterapia'),(98,'Recuperacion'),(99,'Cura Natural'),(100,'Dicha'),(101,'Alma Cura'),(102,'Regeneracion'),(103,'Espesura'),(104,'Pies Rapidos'),(105,'Gula'),(106,'Recogida'),(107,'Nado Rapido'),(108,'Madrugar'),(109,'Rastro'),(110,'Sincronia'),(111,'Ausente'),(112,'Espiritu Vital'),(113,'Velo Agua'),(114,'Foco Interno');
 
 INSERT INTO catalogo_pokemon VALUES
 (1,'Bulbasaur','pokemon_1',1,45,49,49,65,65,45),
@@ -263,9 +277,73 @@ INSERT INTO catalogo_pokemon VALUES
 (53,'Persian',img,1,65,70,60,65,65,115),
 (55,'Golduck',img,1,80,82,78,95,80,85);
 
+INSERT INTO pokemons VALUES
+(1,'Bulbasaur','pokemon_1',1,45,49,49,65,65,45),
+(2,'Ivysaur','pokemon_2',1,60,62,63,80,80,60),
+(3,'Venusaur','pokemon_3',1,80,82,83,100,100,80),
+(4,'Charmander','pokemon_4',1,39,52,43,60,50,65),
+(5,'Charmeleon','pokemon_5',1,58,64,58,80,65,80),
+(6,'Charizard','pokemon_6',1,78,84,78,109,85,100),
+(7,'Squirtle','pokemon_7',1,44,48,65,50,64,43),
+(8,'Wartortle','pokemon_8',1,59,63,80,65,80,58),
+(9,'Blastoise','pokemon_9',1,79,83,100,85,105,78),
+(10,'Pidgey','pokemon_10',1,40,45,40,35,35,56),
+(11,'Pikachu','pokemon_11',1,35,55,40,50,50,90),
+(12,'Raichu','pokemon_12',1,60,90,55,90,80,110),
+(13,'Jigglypuff','pokemon_13',1,115,45,20,45,25,20),
+(14,'Meowth','pokemon_14',1,40,45,35,40,40,90),
+(15,'Psyduck','pokemon_15',1,50,52,48,65,50,55),
+(16,'Gengar','pokemon_16',1,60,65,60,130,75,110),
+(17,'Gyarados','pokemon_17',1,95,125,79,60,100,81),
+(18,'Lapras','pokemon_18',1,130,85,80,85,95,60),
+(19,'Eevee','pokemon_19',1,55,55,50,45,65,55),
+(20,'Vaporeon','pokemon_20',1,130,65,60,110,95,65),
+(21,'Jolteon','pokemon_21',1,65,65,60,110,95,130),
+(22,'Flareon','pokemon_22',1,65,130,60,95,110,65),
+(23,'Porygon','pokemon_23',1,65,60,70,85,75,40),
+(24,'Snorlax','pokemon_24',1,160,110,65,65,110,30),
+(25,'Dragonite','pokemon_25',1,91,134,95,100,100,80),
+(26,'Chikorita','pokemon_26',2,45,49,65,49,65,45),
+(27,'Bayleef','pokemon_27',2,60,62,80,63,80,60),
+(28,'Meganium','pokemon_28',2,80,82,100,83,100,80),
+(29,'Cyndaquil','pokemon_29',2,39,52,43,60,50,65),
+(30,'Quilava','pokemon_30',2,58,64,58,80,65,80),
+(31,'Typhlosion','pokemon_31',2,78,84,78,109,85,100),
+(32,'Totodile','pokemon_32',2,50,65,64,44,48,43),
+(33,'Croconaw','pokemon_33',2,65,80,80,59,63,58),
+(34,'Feraligatr','pokemon_34',2,85,105,100,79,83,78),
+(35,'Hoothoot','pokemon_35',2,60,30,30,36,56,50),
+(36,'Pichu','pokemon_36',2,20,40,15,35,35,60),
+(37,'Togepi','pokemon_37',2,35,20,65,40,65,20),
+(38,'Ampharos','pokemon_38',2,90,75,85,115,90,55),
+(39,'Marill','pokemon_39',2,70,20,50,20,50,40),
+(40,'Sudowoodo','pokemon_40',2,70,100,115,30,65,30),
+(41,'Espeon','pokemon_42',2,65,65,60,130,95,110),
+(42,'Umbreon','pokemon_42',2,95,65,110,60,130,65),
+(43,'Unown','pokemon_43',2,48,72,48,72,48,48),
+(44,'Wobbuffet','pokemon_44',2,190,33,58,33,58,33),
+(45,'Steelix','pokemon_45',2,75,85,200,55,65,30),
+(46,'Scizor','pokemon_46',2,70,130,100,55,80,65),
+(47,'Heracros','pokemon_47',2,80,125,75,40,95,85),
+(48,'Donphan','pokemon_48',2,90,120,120,60,60,50),
+(49,'Militank','pokemon_49',2,95,80,105,40,70,100),
+(50,'Tyranitar','pokemon_50',2,100,134,110,95,100,61),
+(51,'Treecko','pokemon_51',4,40,45,35,65,55,70),
+(52,'Grovyle','pokemon_52',4,50,65,45,85,65,95),
+(53,'Sceptile','pokemon_53',4,70,85,65,105,85,120),
+(54,'Torchic','pokemon_54',4,45,60,40,70,50,45),
+(55,'Combusken','pokemon_55',4,60,85,60,85,60,55),
+(56,'Blaziken','pokemon_56',4,80,120,70,110,70,80),
+(57,'Mudkip','pokemon_57',4,50,70,50,50,50,40),
+(58,'Marshtomp','pokemon_58',4,70,85,70,60,70,50),
+(59,'Swampert','pokemon_59',4,100,110,90,85,90,60),
+(60,'Beautifly','pokemon_60',4,60,70,50,90,50,65);
+
 INSERT INTO catalogo_estatus VALUES (1,'Normal',30,100),(2,'Quemado',85,70),(3,'Congelado',85,70),(4,'Paralizado',100,90),(5,'Envenenado',100,70),(6,'Fuertemente envenenado',120,90),(7,'Dormido',60,70),(8,'Desmayado',60,70);
+INSERT INTO statuses VALUES (1,'Normal',30,100),(2,'Quemado',85,70),(3,'Congelado',85,70),(4,'Paralizado',100,90),(5,'Envenenado',100,70),(6,'Fuertemente envenenado',120,90),(7,'Dormido',60,70),(8,'Desmayado',60,70);
 
 INSERT INTO habilidades VALUES (1,1,1),(2,1,2);
+INSERT INTO pokemon_ability VALUES (1,1,1),(2,1,2);
 
 
 INSERT INTO habilidades VALUES (1,1,100),(2,1,99),(3,4,99),(4,4,100),(5,5,102),(6,5,101),(7,6,103),(8,7,103),(9,8,103),(10,9,3),(11,10,3),(12,11,3),(13,12,6),(14,13,6),(15,15,42),(16,15,104),(17,16,23),(18,16,104),(19,17,106),(20,17,105),(21,18,106),(22,18,105),(23,19,12),(24,43,13),(25,20,14),(26,21,7),(27,21,107),(28,22,7),(29,22,107),(30,23,7),(31,23,107),(32,24,2),(33,24,108),(34,25,2),(35,25,108),(36,26,2),(37,26,108),(38,27,20),(39,28,20),(40,29,16),(41,30,16),(42,31,109),(43,31,110),(44,32,109),(45,32,110),(46,33,109),(47,33,110),(48,38,111),(49,39,112),(50,40,111),(51,41,107),(52,41,113),(53,42,107),(54,42,113),(55,35,23);
@@ -273,20 +351,25 @@ INSERT INTO habilidades VALUES (1,1,100),(2,1,99),(3,4,99),(4,4,100),(5,5,102),(
 INSERT INTO tipos VALUES (1,1,5),(2,4,5),(3,5,5),(4,6,1),(5,7,1),(6,8,1),(7,9,2),(8,10,2),(9,10,10),(10,11,2),(11,12,3),(12,13,3),(13,13,8),(14,14,3),(15,14,8),(16,15,14),(17,16,14),(18,17,5),(19,18,5),(20,19,4),(21,43,4),(22,20,4),(23,20,15),(24,21,3),(25,21,1),(26,22,3),(27,22,1),(28,23,3),(29,23,1),(30,24,1),(31,25,1),(32,25,14),(33,26,1),(34,26,14),(35,27,5),(36,27,15),(37,28,5),(38,28,15),(39,29,3),(40,29,15),(41,30,3),(42,30,15),(43,31,11),(44,31,9),(45,32,11),(46,32,9),(47,33,11),(48,33,9),(49,38,5),(50,39,5),(51,40,5),(52,41,3),(53,42,3),(54,35,15);
 
 INSERT INTO evoluciones VALUES (2,1,4),(3,6,7),(4,7,8),(5,9,10),(6,10,11),(7,12,13),(8,13,14),(9,15,16),(10,17,18),(11,19,43),(12,43,20),(13,21,22),(14,22,23),(15,24,25),(16,25,26),(17,27,28),(18,29,30),(19,31,32),(20,32,33),(21,34,35),(22,36,37),(23,38,39),(24,39,40),(25,41,42);
+INSERT INTO evolutions VALUES (1,1,2),(2,2,3);
 
 INSERT INTO entrenadores VALUES (1,'Alfredo','Barrón','entrenador.png','Freddy','110992','1992-09-11',4,'Hombre',true,4,true),(2,'Ulises','Larraga','entrenador.png','Kross','030593','1993-05-03',1,'Hombre',false,1,true),(3,'Karen','Osuna','entrenadora.png','Anna','carlitos','1992-09-27',1,'Mujer',false,1,true),(4,'Javier','Ramirez','entrenador.png','samy','vkjbvk','2013-12-05',1,'Hombre',true,3,true),(5,'Alain','Olvera','entrenador.png','bebe','259206','1992-06-25',2,'Hombre',true,1,true),(6,'Manuel','Hdez','entrenador.png','Manny','akatsuki','1993-02-12',2,'Hombre',true,4,true),(7,'Jaime Jesus','Delgado Meraz','entrenador.png','j2deme','1234','1987-08-21',1,'Hombre',true,1,true);
+INSERT INTO trainers VALUES (1,'Alfredo','Barrón','entrenador.png','Freddy','110992','1992-09-11',4,'Hombre',true,4,true),(2,'Ulises','Larraga','entrenador.png','Kross','030593','1993-05-03',1,'Hombre',false,1,true),(3,'Karen','Osuna','entrenadora.png','Anna','carlitos','1992-09-27',1,'Mujer',false,1,true),(4,'Javier','Ramirez','entrenador.png','samy','vkjbvk','2013-12-05',1,'Hombre',true,3,true),(5,'Alain','Olvera','entrenador.png','bebe','259206','1992-06-25',2,'Hombre',true,1,true),(6,'Manuel','Hdez','entrenador.png','Manny','akatsuki','1993-02-12',2,'Hombre',true,4,true),(7,'Jaime Jesus','Delgado Meraz','entrenador.png','j2deme','1234','1987-08-21',1,'Hombre',true,1,true);
 
 INSERT INTO pokemon VALUES (1,6,'Tree','Masculino',1,true,100,40,50,70,50,90,1,false),(2,9,'Thor','Femenino',1,true,75,20,40,40,100,50,1,false),(3,12,'Mukito','Masculino',1,false,90,20,40,30,50,70,1,true),(4,9,'Torchic','Masculino',1,false,70,40,50,100,30,60,1,false),(5,12,'Mosca','Masculino',1,true,40,70,30,60,100,90,1,false),(6,31,'el guapo','Masculino',1,true,2,5,5,3,81,1,1,false),(7,27,'cuchurrumin','Masculino',1,true,30,79,30,50,90,60,1,false),(8,13,'','Masculino',1,true,100,85,50,80,90,75,1,false),(9,27,'','Masculino',1,true,100,87,80,30,100,80,1,true);
 
 INSERT INTO pokebolas VALUES (1,2,1,true,false),(2,2,2,true,false),(3,2,3,true,true),(4,3,4,true,false),(5,4,5,true,false),(6,2,1,true,false),(7,6,6,true,false),(8,7,7,true,false),(9,8,8,true,false),(10,9,9,true,true);
 
 INSERT INTO regeneradores VALUES (1,'50',10,false,1,true),(2,'150',50,true,1,true),(3,'75',20,false,1,true),(4,'50',15,false,1,true),(5,'75',10,true,1,true);
+INSERT INTO regenerators VALUES (1,'50',10,false,1,true),(2,'150',50,true,1,true),(3,'75',20,false,1,true),(4,'50',15,false,1,true),(5,'75',10,true,1,true);
 
 INSERT INTO registros VALUES (1,12,NULL,'2013-12-10 20:18:00',NULL,NULL,1,100,1,3,false),(2,12,NULL,'2013-12-10 23:21:00',NULL,NULL,1,100,1,1,false),(3,12,NULL,'2013-12-11 00:29:00',NULL,NULL,1,5,7,2,true),(4,13,NULL,'2013-12-11 09:48:00',NULL,NULL,1,100,1,10,false);
 
 INSERT INTO habitaciones VALUES (1,10,1,true),(2,14,1,true);
+INSERT INTO rooms VALUES (1,10,1,true),(2,14,1,true);
 
 INSERT INTO camas VALUES (1,true,1,1,true),(2,true,1,7,true);
+INSERT INTO room_trainer VALUES (1,true,1,1,true),(2,true,1,7,true);
 
 INSERT INTO imagenes_pokemon VALUES (1,'Chansey.png',1),(2,'Blissey.png',4),(3,'Audino.png',5),(4,'Treecko.png',6),(5,'Grovyle.png',7),(6,'Sceptile.png',8),(7,'Torchic.png',9),(8,'Combusken.png',10),(9,'Blaziken.png',11),(10,'Mudkip.png',12),(11,'Marshtomp.png',13),(12,'Swampert.png',14),(13,'Poochyena.png',15),(14,'Mightyena.png',16),(15,'Zigzagoon.png',17),(16,'Linoone.png',18),(17,'Wurmple.png',19),(18,'Beautifly.png',20),(19,'Lotad.png',21),(20,'Lombre.png',22),(21,'Ludicolo.png',23),(22,'Seedot.png',24),(23,'Nuzleaf.png',25),(24,'Shiftry.png',26),(25,'Taillow.png',27),(26,'Swellow.png',28),(27,'Wingull.png',29),(28,'Pelipper.png',30),(29,'Ralts.png',31),(30,'Kirlia.png',32),(31,'Gardevoir.png',33),(32,'Surskit.png',34),(33,'Masquerain.png',35),(34,'Shroomish.png',36),(35,'Breloom.png',37),(36,'Slakoth.png',38),(37,'Vigoroth.png',39),(38,'Slaking.png',40),(39,'Goldeen.png',41),(40,'Seaking.png',42),(41,'Silcoon.png',43);
 

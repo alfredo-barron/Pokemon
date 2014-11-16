@@ -12,173 +12,128 @@ $app->get('/regiones(/:id)', function($id = null) use($app){
 
 $app->get('/centros(/:id)', function($id = null) use($app){
   if($id == null){
-    $centros = Centro_Pokemon::with('id_region')->get();
+    $centros = Center::with('region_id')->get();
     echo $centros->toJson();
   }else{
-    $status = Centro_Pokemon::with('id_region')->where('id',$id)->first();
-    echo $status->toJson();
+    $centro = Center::with('region_id')->where('id',$id)->first();
+    echo $centro->toJson();
   }
 });
 
-$app->get('/catalogo_tipos(/:id)', function($id = null) use($app){
-  if($id == null){
-    $catalogo_tipos = Catalogo_Tipo::all();
-    echo $catalogo_tipos->toJson();
-  }else{
-    $catalogo_tipo = Catalogo_Tipo::where('id',$id)->first();
-    echo $catalogo_tipo->toJson();
-  }
+$app->get('/region(/:id)/centros', function($id = null) use($app){
+  $centro = Region::with('centers')->where('id',$id)->first();
+  echo $centro->toJson();
 });
 
-$app->get('/catalogo_habilidades(/:id)', function($id = null) use($app){
+$app->get('/tipos(/:id)', function($id = null) use($app){
   if($id == null){
-    $catalogo_habilidades = Catalogo_Habilidad::with('pokemon')->get();
-    echo $catalogo_habilidades->toJson();
+    $tipos = Type::all();
+    echo $tipos->toJson();
   }else{
-    $catalogo_habilidad = Catalogo_Habilidad::where('id',$id)->first();
-    echo $catalogo_habilidad->toJson();
-  }
-});
-
-$app->get('/catalogo_estatus(/:id)', function($id = null) use($app){
-  if($id == null){
-    $catalogo_estatuses = Catalogo_Estatus::all();
-    echo $catalogo_estatuses->toJson();
-  }else{
-    $catalogo_status = Catalogo_Estatus::where('id',$id)->first();
-    echo $catalogo_status->toJson();
-  }
-});
-
-$app->get('/catalogo_pokemon(/:id)', function($id = null) use($app){
-  if($id == null){
-    $catalogo_pokemons = Catalogo_Pokemon::with('region')->get();
-    echo $catalogo_pokemons->toJson();
-  }else{
-    $catalogo_pokemon = Catalogo_Pokemon::with('region')->where('id',$id)->first();
-    echo $catalogo_pokemon->toJson();
+    $tipo = Type::where('id',$id)->first();
+    echo $tipo->toJson();
   }
 });
 
 $app->get('/habilidades(/:id)', function($id = null) use($app){
   if($id == null){
-    $habilidades = Habilidad::with('id_habilidad','id_pokemon')->get();
+    $habilidades = Ability::all();
     echo $habilidades->toJson();
   }else{
-    $habilidad = Habilidad::where('id',$id)->first();
+    $habilidad = Ability::where('id',$id)->first();
     echo $habilidad->toJson();
   }
 });
 
-$app->get('/tipos(/:id)', function($id = null) use($app){
+$app->get('/status(/:id)', function($id = null) use($app){
   if($id == null){
-    $tipos = Tipo::all();
-    echo $tipos->toJson();
+    $statuses = Status::all();
+    echo $statuses->toJson();
   }else{
-    $tipo = Tipo::where('id',$id)->first();
-    echo $tipo->toJson();
+    $status = Status::where('id',$id)->first();
+    echo $status->toJson();
+  }
+});
+
+$app->get('/pokemon(/:id)', function($id = null) use($app){
+  if($id == null){
+    $pokemons = Pokemon::with('region_id')->get();
+    echo $pokemons->toJson();
+  }else{
+    $pokemon = Pokemon::with('region_id')->where('id',$id)->first();
+    echo $pokemon->toJson();
   }
 });
 
 $app->get('/evoluciones(/:id)', function($id = null) use($app){
   if($id == null){
-    $evoluciones = Evolucion::all();
-    echo $evoluciones->toJson();
+    $pokemons = Evolution::with('pokemon_id','pokemon_id_e')->get();
+    echo $pokemons->toJson();
   }else{
-    $evolucion = Evolucion::where('id',$id)->first();
-    echo $evolucion->toJson();
+    $pokemon = Evolution::with('pokemon_id','pokemon_id_e')->where('id',$id)->first();
+    echo $pokemon->toJson();
   }
 });
 
 $app->get('/entrenadores(/:id)', function($id = null) use($app){
   if($id == null){
-    $entrenadores = Entrenador::with('lugar_nacimiento','localizacion_actual')->get();
+    $entrenadores = Trainer::with('region_id','region_id_actual')->get();
     echo $entrenadores->toJson();
   }else{
-    $entrenador = Entrenador::with('lugar_nacimiento','localizacion_actual')->where('id',$id)->first();
+    $entrenador = Trainer::with('region_id','region_id_actual')->where('id',$id)->first();
     echo $entrenador->toJson();
   }
 });
 
 $app->post('/entrenadores', function() use($app) {
   $post = (object) $app->request->post();
-  $entrenador = new Entrenador();
-  $entrenador->nombre = $post->nombre;
-  $entrenador->apellidos = $post->apellidos;
-  $entrenador->imagen = $post->imagen;
-  $entrenador->usuario = $post->usuario;
-  $entrenador->password = $post->password;
-  $entrenador->fecha_nacimiento = $post->fecha_nacimiento;
-  $entrenador->lugar_nacimiento = $post->lugar_nacimiento;
-  $entrenador->sexo = $post->sexo;
-  $entrenador->es_lider = $post->es_lider;
-  $entrenador->localizacion_actual = $post->localizacion_actual;
-  $entrenador->save();
+  $trainer = new Trainer();
+  $trainer->name = $post->name;
+  $trainer->last_name = $post->last_name;
+  $trainer->image = $post->image;
+  $trainer->username = $post->username;
+  $trainer->password = $post->password;
+  $trainer->birthday = $post->birthday;
+  $trainer->region_id = $post->region_id;
+  $trainer->gender = $post->gender;
+  $trainer->leader = $post->leader;
+  $trainer->region_id_actual = $post->region_id_actual;
+  if($trainer->save()) {
+    $response['status'] = '1';
+  } else {
+    $response['status'] = '0';
+  }
 
-  if (!$entrenador) {
-    echo json_encode(array('estado' => false, 'mensaje' => 'Error al registro'));
-  }
-  else {
-   echo json_encode(array('estado' => true, 'mensaje' => 'Registro realizado'));
-  }
+  echo json_encode($response);
 });
 
-$app->get('/pokemon(/:id)', function($id = null) use($app){
-  if($id == null){
-    $pokemon = Pokemon::all();
-    echo $pokemon->toJson();
-  }else{
-    $pokemon = Pokemon::where('id',$id)->first();
-    echo $pokemon->toJson();
-  }
-});
 
 $app->get('/pokebolas(/:id)', function($id = null) use($app){
   if($id == null){
-    $pokebolas = Pokebola::all();
+    $pokebolas = Pokeball::all();
     echo $pokebolas->toJson();
   }else{
-    $pokebola = Pokebola::where('id',$id)->first();
+    $pokebola = Pokeball::where('id',$id)->first();
     echo $pokebola->toJson();
   }
 });
 
 $app->get('/regeneradores(/:id)', function($id = null) use($app){
   if($id == null){
-    $regeneradores = Regenerador::with('id_centro_pokemon')->get();
+    $regeneradores = Regenerator::with('center_id')->get();
     echo $regeneradores->toJson();
   }else{
-    $regenerador = Regenerador::with('id_centro_pokemon')->where('id',$id)->first();
+    $regenerador = Regenerator::with('center_id')->where('id',$id)->first();
     echo $regenerador->toJson();
-  }
-});
-
-$app->get('/registros(/:id)', function($id = null) use($app){
-  if($id == null){
-    $registro = Registro::all();
-    echo $registro->toJson();
-  }else{
-    $registro = Registro::where('id',$id)->first();
-    echo $registro->toJson();
   }
 });
 
 $app->get('/habitaciones(/:id)', function($id = null) use($app){
   if($id == null){
-    $habitaciones = Habitacion::with('id_centro_pokemon')->get();
+    $habitaciones = Room::with('center_id')->get();
     echo $habitaciones->toJson();
   }else{
-    $habitacion = Habitacion::with('id_centro_pokemon')->where('id',$id)->first();
+    $habitacion = Room::with('center_id')->where('id',$id)->first();
     echo $habitacion->toJson();
-  }
-});
-
-$app->get('/camas(/:id)', function($id = null) use($app){
-  if($id == null){
-    $camas = Cama::with('id_habitacion','id_entrenador')->get();
-    echo $camas->toJson();
-  }else{
-    $cama = Cama::with('id_habitacion','id_entrenador')->where('id',$id)->first();
-    echo $cama->toJson();
   }
 });
