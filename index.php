@@ -55,8 +55,6 @@ $app->post('/login', function() use($app){
     } else {
       $response['status'] = '1';
     }
-  } else {
-    $response['status'] = '2';
   }
 
   echo json_encode($response);
