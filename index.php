@@ -43,8 +43,8 @@ $app->post('/login', function() use($app){
   $username = $post->username;
   $password = $post->password;
 
-  $response['username'] = $username;
-  $response['password'] = $password;
+  $response['username'] = $post->username;
+  $response['password'] = $post->password;
   /*$trainer = Trainer::where('username','=',$username)->first();
 
   if(!is_null($trainer)){
