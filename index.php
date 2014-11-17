@@ -40,8 +40,8 @@ $app->get('/', function() use($app){
 
 $app->post('/login', function() use($app){
   $post = (object) $app->request()->post();
-  $username = (isset($post->username)) ? $post->username : '';
-  $password = (isset($post->password)) ? $post->password : '';
+  $username = $post->username;
+  $password = $post->password;
 
   $response['username'] = $username;
   $response['password'] = $password;
