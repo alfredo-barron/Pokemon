@@ -60,7 +60,7 @@ $app->get('/pokemon(/:id)', function($id = null) use($app){
     $pokemon = Pokemon::all();
     echo $pokemon->toJson();
   }else{
-    $pokemon = Pokemon::with('region_id')->where('id',$id)->first();
+    $pokemon = Pokemon::where('id',$id)->first();
     echo $pokemon->toJson();
   }
 });
