@@ -43,7 +43,9 @@ $app->post('/login', function() use($app){
   $username = (isset($post->username)) ? $post->username : '';
   $password = (isset($post->password)) ? $post->password : '';
 
-  $trainer = Trainer::where('username','=',$username)->first();
+  $response['username'] = $username;
+  $response['password'] = $password;
+  /*$trainer = Trainer::where('username','=',$username)->first();
 
   if(!is_null($trainer)){
     if($trainer->password == $password){
@@ -55,7 +57,7 @@ $app->post('/login', function() use($app){
     } else {
       $response['status'] = '1';
     }
-  }
+  }*/
 
   echo json_encode($response);
 });
