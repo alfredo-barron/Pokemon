@@ -43,18 +43,16 @@ $app->post('/login', function() use($app){
   $username = $post->username;
   $password = $post->password;
 
-  $response['username'] = $post->username;
-  $response['password'] = $post->password;
-  /*$trainer = Trainer::where('username','=',$username)->first();
+  $trainer = Trainer::where('username','=',$username)->first();
 
-  if(!is_null($trainer)){
+  /*if(!is_null($trainer)){
     if($trainer->password == $password){
-      $response['status'] = '0';
+      */$response['status'] = '0';
       $response['id'] = $trainer->id;
       $response['username'] = $trainer->username;
       $response['name'] = $trainer->name;
       $response['last_name'] = $trainer->last_name;
-    } else {
+    /*} else {
       $response['status'] = '1';
     }
   }*/
