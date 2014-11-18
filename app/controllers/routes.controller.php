@@ -58,7 +58,8 @@ $app->get('/status(/:id)', function($id = null) use($app){
 $app->get('/pokemon(/:id)', function($id = null) use($app){
   if($id == null){
     $pokemon = Pokemon::all();
-    echo $pokemon->toJson();
+    $response['results'] = array($pokemon->toJson());
+    echo json_encode($response);
   }else{
     $pokemon = Pokemon::where('id',$id)->first();
     echo $pokemon->toJson();
