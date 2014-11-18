@@ -45,17 +45,17 @@ $app->post('/login', function() use($app){
 
   $trainer = Trainer::where('username','=',$username)->first();
 
-  /*if(!is_null($trainer)){
+  if(!is_null($trainer)){
     if($trainer->password == $password){
-      */$response['status'] = '0';
+      $response['status'] = '0';
       $response['id'] = $trainer->id;
       $response['username'] = $trainer->username;
       $response['name'] = $trainer->name;
       $response['last_name'] = $trainer->last_name;
-    /*} else {
+    } else {
       $response['status'] = '1';
     }
-  }*/
+  }
 
   echo json_encode($response);
 });
