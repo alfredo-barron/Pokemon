@@ -40,8 +40,8 @@ $app->get('/', function() use($app){
 
 $app->post('/login', function() use($app){
   $post = (object) $app->request()->post();
-  $username = (isset($post->usuario)) ? $post->usuario : '';
-  $password = (isset($post->password)) ? $post->password : '';
+  $username = $post->username;
+  $password = $post->password;
 
   $trainer = Trainer::where('username','=',$username)->first();
 
@@ -53,7 +53,7 @@ $app->post('/login', function() use($app){
       echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña incorrecta'));
     }
   } else {
-  echo json_encode(array('estado' => false, 'mensaje' => 'Usuario incorrecto'));
+    echo json_encode(array('estado' => false, 'mensaje' => 'Usuario incorrecto'));
   }
 });
 
