@@ -40,24 +40,21 @@ $app->get('/', function() use($app){
 
 $app->post('/login', function() use($app){
   $post = (object) $app->request()->post();
-  $username = $post->username;
-  $password = $post->password;
+  $username = (isset($post->usuario)) ? $post->usuario : '';
+  $password = (isset($post->password)) ? $post->password : '';
 
   $trainer = Trainer::where('username','=',$username)->first();
 
   if(!is_null($trainer)){
     if($trainer->password == $password){
-      $response['status'] = '0';
-      $response['id'] = $trainer->id;
-      $response['username'] = $trainer->username;
-      $response['name'] = $trainer->name;
-      $response['last_name'] = $trainer->last_name;
+      echo json_encode($trainer);
+      $_SESSION['user'] = $trainer;
     } else {
-      $response['status'] = '1';
+      echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña incorrecta'));
     }
+  } else {
+  echo json_encode(array('estado' => false, 'mensaje' => 'Usuario incorrecto'));
   }
-
-  echo json_encode($response);
 });
 
 $app->get('/logout', function() use($app){
