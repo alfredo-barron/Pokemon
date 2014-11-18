@@ -39,9 +39,8 @@ $app->get('/', function() use($app){
 })->name('root');
 
 $app->post('/login', function() use($app){
-  $post = (object) $app->request()->post();
-  $username = $post->username;
-  $password = $post->password;
+  $username = $_POST['username'];
+  $password = $_POST['password'];
 
   $trainer = Trainer::where('username','=',$username)->first();
 
