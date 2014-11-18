@@ -40,17 +40,15 @@ $app->get('/', function() use($app){
 
 $app->get('/login/:username/:password', function($username,$password) use($app){
 
-  $trainer = Trainer::where('username','=',$username)->first();
+  $trainer = Trainer::where('username','=',$username)->where('password','=',$password)->first();
 
   if(!is_null($trainer)){
-    if($trainer->password == $password){
-      $trainer->toJson();
-    } else {
-      $trainer['id'] = "0";
-    }
+      echo $trainer->toJson();
   } else {
      $trainer['id'] = "0";
+     echo json_encode($trainer);
   }
+
 
 });
 
