@@ -42,23 +42,16 @@ $app->get('/login/:username/:password', function($username,$password) use($app){
 
   $trainer = Trainer::where('username','=',$username)->first();
 
-  $response['ok'] = "porque no imprime";
-  $response['username'] = $username;
-  $response['password'] = $password;
-
-  echo json_encode($response);
-/*
   if(!is_null($trainer)){
     if($trainer->password == $password){
-      echo json_encode($trainer);
-      $_SESSION['user'] = $trainer;
+      echo $trainer->toJson();
     } else {
       echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña incorrecta'));
     }
   } else {
     echo json_encode(array('estado' => false, 'mensaje' => 'Usuario incorrecto'));
   }
-  */
+
 });
 
 $app->get('/logout', function() use($app){
