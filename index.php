@@ -45,7 +45,7 @@ $app->post('/login', function() use($app){
 
   $trainer = Trainer::where('username','=',$username)->first();
 
-  echo $trainer;
+  echo json_encode($trainer);
 /*
   if(!is_null($trainer)){
     if($trainer->password == $password){
