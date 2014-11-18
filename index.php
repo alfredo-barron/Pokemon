@@ -45,6 +45,8 @@ $app->post('/login', function() use($app){
 
   $trainer = Trainer::where('username','=',$username)->first();
 
+  echo $trainer;
+/*
   if(!is_null($trainer)){
     if($trainer->password == $password){
       echo json_encode($trainer);
@@ -55,6 +57,7 @@ $app->post('/login', function() use($app){
   } else {
     echo json_encode(array('estado' => false, 'mensaje' => 'Usuario incorrecto'));
   }
+  */
 });
 
 $app->get('/logout', function() use($app){
