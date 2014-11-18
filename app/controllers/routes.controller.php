@@ -58,7 +58,8 @@ $app->get('/status(/:id)', function($id = null) use($app){
 $app->get('/pokemon(/:id)', function($id = null) use($app){
   if($id == null){
     $pokemon = Pokemon::all();
-    $i = 0;
+    echo $pokemon->toJson();
+    /*$i = 0;
     foreach ($pokemon as $p) {
       $data[$i] =  array(
           'id' => $p->id,
@@ -71,11 +72,11 @@ $app->get('/pokemon(/:id)', function($id = null) use($app){
           'speed' => $p->speed,
           'evasion' => $p->evasion,
           'accuracy' => $p->accuracy,
-          );
+          );pokemon
       $i++;
     }
     $response['pokemon'] = $data;
-    echo json_encode($response);
+    echo json_encode($response); */
   }else{
     $pokemon = Pokemon::where('id',$id)->first();
     echo $pokemon->toJson();
