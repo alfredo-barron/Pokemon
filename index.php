@@ -44,12 +44,12 @@ $app->get('/login/:username/:password', function($username,$password) use($app){
 
   if(!is_null($trainer)){
     if($trainer->password == $password){
-      echo $trainer->toJson();
+      $trainer->toJson();
     } else {
-      echo json_encode(array('estado' => false, 'mensaje' => 'Contraseña incorrecta'));
+      $trainer['id'] = "0";
     }
   } else {
-    echo json_encode(array('estado' => false, 'mensaje' => 'Usuario incorrecto'));
+     $trainer['id'] = "0";
   }
 
 });
