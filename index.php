@@ -45,7 +45,11 @@ $app->post('/login', function() use($app){
 
   $trainer = Trainer::where('username','=',$username)->first();
 
-  echo json_encode($trainer);
+  $response['ok'] = "porque no imprime";
+  $response['username'] = $username;
+  $response['password'] = $password;
+
+  echo json_encode($response);
 /*
   if(!is_null($trainer)){
     if($trainer->password == $password){
