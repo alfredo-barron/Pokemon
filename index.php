@@ -38,7 +38,7 @@ $app->get('/', function() use($app){
  echo "<h1>Pokémon Api</h1>";
 })->name('root');
 
-$app->post('/login/:username/:password', function($username,$password) use($app){
+$app->get('/login/:username/:password', function($username,$password) use($app){
 
   $trainer = Trainer::where('username','=',$username)->first();
 
