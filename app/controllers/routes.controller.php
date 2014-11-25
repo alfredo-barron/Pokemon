@@ -117,12 +117,14 @@ $app->post('/entrenadores', function() use($app) {
   $trainer->leader = $post->leader;
   $trainer->region_id_actual = $post->region_id_actual;
   if($trainer->save()) {
-    echo $trainer->toJson();
+    $trainer['status'] = '1';
+    $trainer['username'] = $post->username;
+    $trainer['password'] = $post->password;
   } else {
-    $response['status'] = '0';
+    $trainer['status'] = '0';
   }
 
-  echo json_encode($response);
+  echo json_encode($trainer);
 });
 
 
