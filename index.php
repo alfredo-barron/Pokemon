@@ -14,15 +14,6 @@ foreach(glob(MODELS_FOLDER.'*.php') as $model) {
     include_once $model;
 }
 
-$auth = function ($app) {
-  return function () use ($app) {
-    if (!isset($_SESSION['user'])) {
-      //$_SESSION['redirectTo'] = $app->request()->getPathInfo()
-      $app->redirect($app->urlFor('root'));
-    }
-  };
-};
-
 $app->contentType('text/html; charset=utf-8');
 
 $app->hook('slim.before.dispatch', function() use ($app) {
