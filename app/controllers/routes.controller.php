@@ -117,7 +117,7 @@ $app->post('/entrenadores', function() use($app) {
   $trainer->leader = $post->leader;
   $trainer->region_id_actual = $post->region_id_actual;
   if($trainer->save()) {
-    $response['status'] = '1';
+    echo $trainer->toJson();
   } else {
     $response['status'] = '0';
   }
