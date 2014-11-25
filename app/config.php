@@ -3,6 +3,13 @@ include_once 'vars.inc.php';
 include_once 'arrays.php';
 
 $app = new \Slim\Slim();
+if(COOKIES_ENABLED) {
+  $app->add(new \Slim\Middleware\SessionCookie(array(
+    'secret'  => md5(COOKIE_SECRET),
+    'expires' => COOKIE_DURATION,
+    'name'    => COOKIE_NAME
+  )));
+}
 
 $app->config(array(
   'debug' => true,
@@ -10,6 +17,16 @@ $app->config(array(
   'view' => new \Slim\Views\Twig(),
   'mode'           => SLIM_MODE
 ));
+
+$app->configureMode('production', function () use ($app) {
+  $app->config(array('log.enabled' => true, 'debug' => false));
+});
+
+$app->configureMode('development', function () use ($app) {
+  $app->config(array('log.enabled' => false, 'debug' => true));
+});
+
+$app->notFound(function () use ($app) { $app->render('404.twig'); });
 
 $view = $app->view();
 $app->view->parserExtensions = array(

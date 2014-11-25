@@ -3,6 +3,7 @@ class Center extends Elegant {
   protected $table = 'centers';
   protected $rules = array(
   );
+  public $timestamps = false;
   //Muchos regeneradores en un centro pokemon
   public function regenerators(){
     return $this->hasMany('Regenerator');

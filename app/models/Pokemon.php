@@ -3,6 +3,7 @@ class Pokemon extends Elegant {
   protected $table = 'pokemons';
   protected $rules = array(
   );
+  public $timestamps = false;
 
   public function evolutions(){
     return $this->hasOne('Evolution');
