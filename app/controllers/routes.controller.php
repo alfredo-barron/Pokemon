@@ -118,8 +118,11 @@ $app->post('/entrenadores', function() use($app) {
   $trainer->region_id_actual = $post->region_id_actual;
   if($trainer->save()) {
     $trainer['status'] = '1';
-    $trainer['username'] = $post->username;
-    $trainer['password'] = $post->password;
+    $trainer['id'] = $trainer->id;
+    $trainer['username'] = $trainer->username;
+    $trainer['password'] = $trainer->password;
+    $trainer['name'] = $trainer->name;
+    $trainer['last_name'] = $trainer->last_name;
   } else {
     $trainer['status'] = '0';
   }
