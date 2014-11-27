@@ -93,7 +93,7 @@ $app->get('/evoluciones(/:id)', function($id = null) use($app){
   }
 });
 
-$app->get('/entrenadores(/:)', function($id = null) use($app){
+$app->get('/entrenadores(/:id)', function($id = null) use($app){
   if($id == null){
     $trainer = Trainer::with('region_id','region_id_actual')->get();
     echo $trainer->toJson();
@@ -103,10 +103,6 @@ $app->get('/entrenadores(/:)', function($id = null) use($app){
   }
 });
 
-$app->get('/entrenador/:username', function($username) use($app){
-    $trainer = Trainer::where('username','=',$username)->first();
-    echo $trainer->toJson();
-});
 
 $app->post('/entrenadores', function() use($app) {
   $post = (object) $app->request->post();
