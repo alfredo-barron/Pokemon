@@ -98,7 +98,7 @@ $app->get('/entrenadores(/:)', function($id = null) use($app){
     $trainer = Trainer::with('region_id','region_id_actual')->get();
     echo $trainer->toJson();
   }else{
-    $trainer = Trainer::with('region_id','region_id_actual')->where('id',$id)->first();
+    $trainer = Trainer::where('id',$id)->first();
     echo $trainer->toJson();
   }
 });
