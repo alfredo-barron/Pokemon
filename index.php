@@ -40,7 +40,7 @@ $app->get('/', function() use($app){
 
 $app->get('/login/:username/:password', function($username,$password) use($app){
 
-  $trainer = Trainer::where('username','=',$username)->where('password','=',$password)->first();
+  $trainer = Trainer::with('region_id','region_id_actual')->where('username','=',$username)->where('password','=',$password)->first();
 
   if(!is_null($trainer)){
       echo $trainer->toJson();
