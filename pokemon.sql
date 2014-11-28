@@ -107,6 +107,7 @@ create table pokeballs(
   evasion int not null,
   accuracy int not null,
   status_id int not null,
+  status text not null,
   available boolean default '1',
   foreign key (pokemon_id) references pokemons(id),
   foreign key (trainer_id) references trainers(id),

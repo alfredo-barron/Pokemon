@@ -162,6 +162,8 @@ $app->post('/pokebola', function() use($app){
   $pokeball->accuracy = $pokemon->accuracy;
 
   $pokeball->status_id = rand(1,8);
+  $status = Status::where('id',$pokeball->status_id)->first();
+  $pokeball->status = $status->name;
 
   if($pokeball->save()) {
     $pokeball['status'] = 1;
