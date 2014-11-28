@@ -97,6 +97,7 @@ create table pokeballs(
   trainer_id int not null,
   pokemon_id int not null,
   specie text not null,
+  image tex not null,
   alias text,
   gender text default 'Masculino',
   level int not null,
