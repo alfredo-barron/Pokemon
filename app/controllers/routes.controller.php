@@ -98,7 +98,7 @@ $app->get('/entrenadores(/:id)', function($id = null) use($app){
     $trainer = Trainer::with('region_id','region_id_actual')->get();
     echo $trainer->toJson();
   }else{
-    $trainer = Trainer::where('id',$id)->first();
+    $trainer = Trainer::with('region_id','region_id_actual')->where('id',$id)->first();
     echo $trainer->toJson();
   }
 });
@@ -140,6 +140,37 @@ $app->get('/pokebolas(/:id)', function($id = null) use($app){
     $pokebola = Pokeball::where('id',$id)->first();
     echo $pokebola->toJson();
   }
+});
+
+$app->post('/pokebola', function() use($app){
+  $post = (object) $app->request->post();
+  $pokeball = new Pokeball();
+  $pokeball->trainer_id = $post->trainer_id;
+  $pokeball->pokemon_id = $post->pokemon_id;
+  $pokeball->alias = $post->alias;
+  $pokeball->gender = $post->gender;
+  $pokeball->level = 1;
+
+  $id = $post->pokemon_id;
+  $pokemon = Pokemon::where('id',$id)->first();
+  $pokeball->specie = $pokemon->species;
+  $pokeball->hit_points = $pokemon->hit_points;
+  $pokeball->attack = $pokemon->attack;
+  $pokeball->defense = $pokemon->defense;
+  $pokeball->speed = $pokemon->speed;
+  $pokeball->evasion = $pokemon->evasion;
+  $pokeball->accuracy = $pokemon->accuracy;
+
+  $pokeball->status_id = rand(1,8);
+
+  if($pokeball->save()) {
+    $pokeball['status'] = 1;
+  } else {
+    $pokeball['status'] = 0;
+  }
+
+  echo json_encode($pokeball);
+
 });
 
 $app->get('/regeneradores(/:id)', function($id = null) use($app){

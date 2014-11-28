@@ -94,7 +94,9 @@ create table trainers(
 --Mis pokemones
 create table pokeballs(
   id serial primary key,
+  trainer_id int not null,
   pokemon_id int not null,
+  specie text not null,
   alias text,
   gender text default 'Masculino',
   level int not null,
@@ -107,15 +109,8 @@ create table pokeballs(
   status_id int not null,
   available boolean default '1',
   foreign key (pokemon_id) references pokemons(id),
+  foreign key (trainer_id) references trainers(id),
   foreign key (status_id) references statuses(id)
-);
-
-create table pokeball_trainer(
-  id serial primary key,
-  pokeball_id int not null,
-  trainer_id int not null,
-  foreign key (pokeball_id) references pokeballs(id),
-  foreign key (trainer_id) references trainers(id)
 );
 
 --Uno a muchos
