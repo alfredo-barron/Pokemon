@@ -137,7 +137,7 @@ $app->get('/pokebolas(/:id)', function($id = null) use($app){
     $pokebola = Pokeball::all();
     echo $pokebola->toJson();
   }else{
-    $pokebola = Pokeball::where('trainer_id',$id)->first();
+    $pokebola = Pokeball::where('trainer_id',$id)->get();
     echo $pokebola->toJson();
   }
 });
