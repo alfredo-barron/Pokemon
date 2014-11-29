@@ -3,7 +3,7 @@
 $app->get('/inicio/:id', function($id) use($app){
    $pokemon = Pokeball::where('trainer_id',$id)->get();
    $trainer = Trainer::where('id',$id)->first();
-   $pokemon['trainer_id'] = $trainer->username;
+   $pokemon['trainer_id'] = "Hola";
    //echo $pokemon->toJson();
    echo json_encode($pokemon);
 });
