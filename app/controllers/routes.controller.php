@@ -7,7 +7,7 @@ $app->get('/inicio/:id', function($id) use($app){
    //echo $pokemon->toJson();
 
    foreach ($pokeball as $pk) {
-    $data[$i] =  array(
+    $data =  array(
           'id' => $pk->id,
           'specie' => $pk->specie,
           'image' => $pk->image,
