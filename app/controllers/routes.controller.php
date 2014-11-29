@@ -6,9 +6,11 @@ $app->get('/inicio/:id', function($id) use($app){
    //$pokemon['trainer_id'] = "Hola";
    //echo $pokemon->toJson();
 
+    $response['id'] = $id;
    foreach ($pokeball as $pk) {
     $response['trainer'] =  $pk->trainer_id = $trainer->username;
    }
+   $response['status'] = $pokemon->$status;
 
    echo json_encode($response);
 });
