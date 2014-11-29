@@ -7,10 +7,22 @@ $app->get('/inicio/:id', function($id) use($app){
    //echo $pokemon->toJson();
 
    foreach ($pokeball as $pk) {
-    $pk->trainer_id = $trainer->username;
+    $data[$i] =  array(
+          'id' => $pk->id,
+          'species' => $pk->species,
+          'image' => $pk->image,
+          'region_id' => $pk->region_id,
+          'hit_points' => $pk->hit_points,
+          'attack' => $pk->attack,
+          'defense' => $pk->defense,
+          'speed' => $pk->speed,
+          'evasion' => $pk->evasion,
+          'accuracy' => $pk->accuracy,
+          );
+      $i++;
    }
 
-   echo json_encode($pokeball);
+   echo json_encode($data);
 });
 
 $app->get('/regiones(/:id)', function($id = null) use($app){
