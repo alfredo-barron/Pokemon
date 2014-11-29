@@ -5,10 +5,12 @@ $app->get('/inicio/:id', function($id) use($app){
    $trainer = Trainer::where('id',$id)->first();
    //$pokemon['trainer_id'] = "Hola";
    //echo $pokemon->toJson();
+
    foreach ($pokeball as $pk) {
-      $pk->trainer_id = $trainer->username;
+    $response['trainer'] =  $pk->trainer_id = $trainer->username;
    }
-   echo json_encode($pokeball);
+
+   echo json_encode($response);
 });
 
 $app->get('/regiones(/:id)', function($id = null) use($app){
