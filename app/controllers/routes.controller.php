@@ -6,7 +6,7 @@ $app->get('/inicio/:id', function($id) use($app){
 
    $response['id'] = $trainer->id;
    $response['username'] = $trainer->username;
-   $response['specie'] = $pokemon->species;
+   $response['specie'] = $pokemon->specie;
 
    echo json_encode($response);
 });
