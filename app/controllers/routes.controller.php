@@ -4,8 +4,8 @@ $app->get('/inicio/:id', function($id) use($app){
    $pokemon = Pokeball::where('trainer_id',$id)->get();
    $trainer = Trainer::where('id',$id)->first();
    $pokemon['trainer_id'] = $trainer->username;
-   echo $pokemon->toJson();
-   //echo json_encode($pokemon);
+   //echo $pokemon->toJson();
+   echo json_encode($pokemon);
 });
 
 $app->get('/regiones(/:id)', function($id = null) use($app){
