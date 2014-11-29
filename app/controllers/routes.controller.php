@@ -6,14 +6,11 @@ $app->get('/inicio/:id', function($id) use($app){
    //$pokemon['trainer_id'] = "Hola";
    //echo $pokemon->toJson();
 
-    $response['id'] = $id;
    foreach ($pokeball as $pk) {
-    $response['trainer'] =  $pk->trainer_id = $trainer->username;
-    $response['specie'] = $pk->specie;
+    $pk->trainer_id = $trainer->username;
    }
-   $response['status'] = $pokeball->$status;
 
-   echo json_encode($response);
+   echo json_encode($pokeball);
 });
 
 $app->get('/regiones(/:id)', function($id = null) use($app){
