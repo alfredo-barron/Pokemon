@@ -12,6 +12,8 @@ $app->get('/inicio/:id', function($id) use($app){
           'specie' => $pk->specie,
           'image' => $pk->image,
           'alias' => $pk->alias,
+          'status' => $pk->status,
+          'trainer' => $trainer->username,
           );
       $i++;
    }
