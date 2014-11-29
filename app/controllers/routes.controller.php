@@ -1,5 +1,16 @@
 <?php
 
+$app->get('/inicio/:id', function($id) use($app){
+   $trainer = Trainer::where('id',$id)->first();
+   $pokemon = Pokeball::where('trainer_id',$id)->first();
+
+   $response['id'] = $trainer->id;
+   $response['username'] = $trainer->username;
+   $response['specie'] = $pokemon->species;
+
+   echo json_encode($response);
+});
+
 $app->get('/regiones(/:id)', function($id = null) use($app){
   if($id == null){
     $region = Region::all();
