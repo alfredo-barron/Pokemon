@@ -7,7 +7,7 @@ $app->get('/inicio/:id', function($id) use($app){
    //echo $pokemon->toJson();
 
    foreach ($pokeball as $pk) {
-    $data[] =  array(
+    $notices[] =  array(
           'id' => $pk->id,
           'specie' => $pk->specie,
           'image' => $pk->image,
@@ -18,7 +18,7 @@ $app->get('/inicio/:id', function($id) use($app){
       $i++;
    }
 
-   echo json_encode($data);
+   echo json_encode($notices);
 });
 
 $app->get('/regiones(/:id)', function($id = null) use($app){
