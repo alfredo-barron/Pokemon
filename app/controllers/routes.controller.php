@@ -9,15 +9,9 @@ $app->get('/inicio/:id', function($id) use($app){
    foreach ($pokeball as $pk) {
     $data[$i] =  array(
           'id' => $pk->id,
-          'species' => $pk->species,
+          'specie' => $pk->specie,
           'image' => $pk->image,
-          'region_id' => $pk->region_id,
-          'hit_points' => $pk->hit_points,
-          'attack' => $pk->attack,
-          'defense' => $pk->defense,
-          'speed' => $pk->speed,
-          'evasion' => $pk->evasion,
-          'accuracy' => $pk->accuracy,
+          'alias' => $pk->alias,
           );
       $i++;
    }
