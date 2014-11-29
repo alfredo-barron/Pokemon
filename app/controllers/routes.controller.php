@@ -3,13 +3,8 @@
 $app->get('/inicio/:id', function($id) use($app){
    $trainer = Trainer::where('id',$id)->first();
    $pokemon = Pokeball::where('trainer_id',$id)->get();
-
-   $response['id'] = $trainer->id;
-   $response['username'] = $trainer->username;
-   $response['specie'] = $pokemon->specie;
-   $response['status'] = $pokemon->status;
-
-   echo json_encode($response);
+   echo $pokemon->toJson();
+   //echo json_encode($pokemon);
 });
 
 $app->get('/regiones(/:id)', function($id = null) use($app){
