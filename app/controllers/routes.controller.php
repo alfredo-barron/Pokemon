@@ -2,11 +2,12 @@
 
 $app->get('/inicio/:id', function($id) use($app){
    $trainer = Trainer::where('id',$id)->first();
-   $pokemon = Pokeball::where('trainer_id',$id)->first();
+   $pokemon = Pokeball::where('trainer_id',$id)->get();
 
    $response['id'] = $trainer->id;
    $response['username'] = $trainer->username;
    $response['specie'] = $pokemon->specie;
+   $response['status'] = $pokemon->status;
 
    echo json_encode($response);
 });
