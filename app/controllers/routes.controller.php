@@ -19,12 +19,12 @@ $app->get('/inicio/:id', function($id) use($app){
    }
    } else {
       $notices[] =  array(
-          'id' => 0,
-          'specie' => "",
-          'image' => "",
-          'alias' => "",
-          'status' => "",
-          'trainer' =>"",
+          'id' => 1,
+          'specie' => "Sin pokemon",
+          'image' => "ic_launcher",
+          'alias' => "No tienes",
+          'status' => "Nada",
+          'trainer' =>"Lo sentimos",
           );
    }
 
