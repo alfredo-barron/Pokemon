@@ -19,12 +19,12 @@ $app->get('/inicio/:id', function($id) use($app){
    }
    } else {
       $notices[] =  array(
-          'id' => "null",
-          'specie' => "null",
-          'image' => "null",
-          'alias' => "null",
-          'status' => "null",
-          'trainer' => "null",
+          'id' => 0,
+          'specie' => "",
+          'image' => "",
+          'alias' => "",
+          'status' => "",
+          'trainer' =>"",
           );
    }
 
