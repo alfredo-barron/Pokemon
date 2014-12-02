@@ -2,7 +2,7 @@
 
 $app->get('/inicio/:id', function($id) use($app){
    $pokeball = Pokeball::where('trainer_id',$id)->get();
-   if($pokeball) {
+   if(isset($pokeball)) {
       $trainer = Trainer::where('id',$id)->first();
    //$pokemon['trainer_id'] = "Hola";
    //echo $pokemon->toJson();
