@@ -2,10 +2,7 @@
 
 $app->get('/inicio/:id', function($id) use($app){
    $pokeball = Pokeball::where('trainer_id',$id)->get();
-   if(isset($pokeball)) {
-      $trainer = Trainer::where('id',$id)->first();
-   //$pokemon['trainer_id'] = "Hola";
-   //echo $pokemon->toJson();
+   $trainer = Trainer::where('id',$id)->first();
    foreach ($pokeball as $pk) {
     $notices[] =  array(
           'id' => $pk->id,
@@ -17,18 +14,9 @@ $app->get('/inicio/:id', function($id) use($app){
           );
       $i++;
    }
-   } else {
-      $notices[] =  array(
-          'id' => 1,
-          'specie' => "Sin pokemon",
-          'image' => "ic_launcher",
-          'alias' => "No tienes",
-          'status' => "Nada",
-          'trainer' =>"Lo sentimos",
-          );
-   }
 
    echo json_encode($notices);
+
 });
 
 $app->get('/regiones(/:id)', function($id = null) use($app){
@@ -160,6 +148,7 @@ $app->post('/entrenadores', function() use($app) {
   }
 
   echo json_encode($trainer);
+
 });
 
 

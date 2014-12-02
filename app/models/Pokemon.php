@@ -13,4 +13,12 @@ class Pokemon extends Elegant {
     return $this->belongsTo('Region','region_id');
   }
 
+  public function types() {
+    return $this->belongsToMany('Type');
+  }
+
+  public function abilities() {
+    return $this->belongsToMany('Ability');
+  }
+
 }
