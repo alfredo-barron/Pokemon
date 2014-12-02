@@ -46,10 +46,10 @@ $app->get('/region(/:id)/centros', function($id = null) use($app){
 
 $app->get('/tipos(/:id)', function($id = null) use($app){
   if($id == null){
-    $tipo = Type::with('pokemons')->get();
+    $tipo = Pokemon::with('types')->get();
     echo $tipo->toJson();
   }else{
-    $tipo = Type::where('id',$id)->first();
+    $tipo = Pokemon::->with('types')->where('id',$id)->first();
     echo $tipo->toJson();
   }
 });
