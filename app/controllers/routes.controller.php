@@ -49,7 +49,7 @@ $app->get('/tipos(/:id)', function($id = null) use($app){
     $tipo = Pokemon::with('types')->get();
     echo $tipo->toJson();
   }else{
-    $tipo = Pokemon::->with('types')->where('id',$id)->first();
+    $tipo = Pokemon::with('types')->where('id',$id)->first();
     echo $tipo->toJson();
   }
 });
