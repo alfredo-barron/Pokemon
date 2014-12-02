@@ -46,7 +46,7 @@ $app->get('/region(/:id)/centros', function($id = null) use($app){
 
 $app->get('/tipos(/:id)', function($id = null) use($app){
   if($id == null){
-    $tipo = Type::all();
+    $tipo = Type::with('pokemons')->all();
     echo $tipo->toJson();
   }else{
     $tipo = Type::where('id',$id)->first();
