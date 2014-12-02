@@ -2,10 +2,10 @@
 
 $app->get('/inicio/:id', function($id) use($app){
    $pokeball = Pokeball::where('trainer_id',$id)->get();
-   $trainer = Trainer::where('id',$id)->first();
+   if($pokeball) {
+      $trainer = Trainer::where('id',$id)->first();
    //$pokemon['trainer_id'] = "Hola";
    //echo $pokemon->toJson();
-
    foreach ($pokeball as $pk) {
     $notices[] =  array(
           'id' => $pk->id,
@@ -16,6 +16,16 @@ $app->get('/inicio/:id', function($id) use($app){
           'trainer' => $trainer->username,
           );
       $i++;
+   }
+   } else {
+      $notices[] =  array(
+          'id' => "null",
+          'specie' => "null",
+          'image' => "null",
+          'alias' => "null",
+          'status' => "null",
+          'trainer' => "null",
+          );
    }
 
    echo json_encode($notices);
