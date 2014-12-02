@@ -173,6 +173,7 @@ $app->post('/pokebola', function() use($app){
 
   $id = $post->pokemon_id;
   $pokemon = Pokemon::where('id',$id)->first();
+  $pokeball->url = $pokemon->url;
   $pokeball->specie = $pokemon->species;
   $pokeball->image = $pokemon->image;
   $pokeball->hit_points = $pokemon->hit_points;
