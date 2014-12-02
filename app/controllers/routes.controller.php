@@ -50,14 +50,7 @@ $app->get('/tipos(/:id)', function($id = null) use($app){
     echo $tipo->toJson();
   }else{
     $tipo = Pokemon::with('types')->where('id',$id)->first();
-    foreach ($tipo as $t) {
-      $types[] =  array(
-          'id' => $t->id,
-          'name' => $t->types->name,
-          );
-      $i++;
-    }
-    echo json_encode($types);
+    echo $tipo->toJson();
   }
 });
 
