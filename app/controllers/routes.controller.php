@@ -136,16 +136,7 @@ $app->post('/entrenadores', function() use($app) {
   $trainer->gender = $post->gender;
   $trainer->leader = $post->leader;
   $trainer->region_id_actual = $post->region_id_actual;
-  if($trainer->save()) {
-    $trainer['status'] = '1';
-    $trainer['id'] = $trainer->id;
-    $trainer['username'] = $trainer->username;
-    $trainer['password'] = $trainer->password;
-    $trainer['name'] = $trainer->name;
-    $trainer['last_name'] = $trainer->last_name;
-  } else {
-    $trainer['status'] = '0';
-  }
+  $trainer->save())
 
   echo json_encode($trainer);
 
