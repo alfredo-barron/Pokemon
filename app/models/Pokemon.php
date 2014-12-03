@@ -18,7 +18,7 @@ class Pokemon extends Elegant {
   }
 
   public function abilities() {
-    return $this->belongsToMany('Ability');
+    return $this->belongsToMany('Ability','ability_id');
   }
 
 }
