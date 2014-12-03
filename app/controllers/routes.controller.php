@@ -119,9 +119,6 @@ $app->post('/entrenadores', function() use($app) {
   $trainer->leader = $post->leader;
   $trainer->region_id_actual = $post->region_id_actual;
   $trainer->save()
-
-  echo json_encode($trainer);
-
 });
 
 
@@ -169,9 +166,6 @@ $app->post('/pokebola', function() use($app){
   $pokeball->status = $status->name;
 
   $pokeball->save();
-
-  echo json_encode($pokeball);
-
 });
 
 $app->get('/regeneradores(/:id)', function($id = null) use($app){
