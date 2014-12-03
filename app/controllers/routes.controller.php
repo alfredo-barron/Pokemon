@@ -155,9 +155,11 @@ $app->get('/pokebolas(/:id)', function($id = null) use($app){
 
 $app->post('/pokebola', function() use($app){
   $post = (object) $app->request->post();
+
   $pokeball = new Pokeball();
   $pokeball->trainer_id = $post->trainer_id;
   $pokeball->pokemon_id = $post->pokemon_id;
+
   $gender = rand(1,2);
   if($gender == 1) {
     $genero = "Masculino";
@@ -184,11 +186,7 @@ $app->post('/pokebola', function() use($app){
   $status = Status::where('id',$pokeball->status_id)->first();
   $pokeball->status = $status->name;
 
-  if($pokeball->save()) {
-    $pokeball['status'] = 1;
-  } else {
-    $pokeball['status'] = 0;
-  }
+  $pokeball->save()
 
   echo json_encode($pokeball);
 
