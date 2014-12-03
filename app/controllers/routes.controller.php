@@ -125,7 +125,7 @@ $app->post('/entrenadores', function() use($app) {
       $trainer['name'] = $trainer->name;
       $trainer['last_name'] = $trainer->last_name;
     }
-      echo json_encode($trainer);
+      echo $trainer->toJson();
 });
 
 
