@@ -56,10 +56,10 @@ $app->get('/tipos(/:id)', function($id = null) use($app){
 
 $app->get('/habilidades(/:id)', function($id = null) use($app){
   if($id == null){
-    $habilidad = Ability::all();
+    $habilidad = Power::all();
     echo $habilidad->toJson();
   }else{
-    $habilidad = Ability::where('id',$id)->first();
+    $habilidad = Power::where('id',$id)->first();
     echo $habilidad->toJson();
   }
 });
@@ -97,7 +97,7 @@ $app->get('/pokemon(/:id)', function($id = null) use($app){
     $response['pokemon'] = $data;
     echo json_encode($response); */
   }else{
-    $pokemon = Pokemon::with('types','abilities')->where('id',$id)->first();
+    $pokemon = Pokemon::with('types','powers')->where('id',$id)->first();
     echo $pokemon->toJson();
   }
 });

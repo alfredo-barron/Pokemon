@@ -1,6 +1,6 @@
 <?php
 class Ability extends Elegant {
-  protected $table = 'abilities';
+  protected $table = 'powers';
   protected $rules = array(
   );
   public $timestamps = false;

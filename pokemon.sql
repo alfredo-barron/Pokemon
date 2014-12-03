@@ -19,7 +19,7 @@ create table types(
   name text not null
 );
 --Catalogo Habilidades
-create table abilities(
+create table powers(
   id serial primary key,
   name text not null
 );
@@ -48,12 +48,12 @@ create table statuses(
 );
 --MUCHOS A MUCHOS
 --Habilidades
-create table pokemon_ability(
+create table pokemon_power(
   id serial primary key,
   pokemon_id int not null,
-  ability_id int not null,
+  power_id int not null,
   foreign key (pokemon_id) references pokemons(id),
-  foreign key (ability_id) references abilities(id)
+  foreign key (power_id) references powers(id)
 );
 --MUCHO A MUCHOS
 --Tipos
@@ -425,7 +425,7 @@ INSERT INTO pokemon_type VALUES
 (80,60,13),
 (81,60,5);
 
-INSERT INTO abilities VALUES
+INSERT INTO powers VALUES
 (1,'A prueba de balas'),
 (2,'Abrigo'),
 (3,'Abrigo de piel'),
@@ -624,7 +624,7 @@ INSERT INTO abilities VALUES
 (198,'Desahogarse');
 
 
-INSERT INTO pokemon_ability VALUES
+INSERT INTO pokemon_power VALUES
 (1,1,41),
 (2,1,36),
 (3,2,41),
