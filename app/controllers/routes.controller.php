@@ -167,13 +167,19 @@ $app->post('/pokebola', function() use($app){
   $pokeball = new Pokeball();
   $pokeball->trainer_id = $post->trainer_id;
   $pokeball->pokemon_id = $post->pokemon_id;
-  $pokeball->alias = $post->alias;
-  $pokeball->gender = $post->gender;
+  $gender = rand(1,2);
+  if($gender == 1) {
+    $genero = "Masculino";
+  } else {
+    $genero = "Femenino";
+  }
+  $pokeball->gender = $genero;
   $pokeball->level = 1;
 
   $id = $post->pokemon_id;
   $pokemon = Pokemon::where('id',$id)->first();
   $pokeball->url = $pokemon->url;
+  $pokeball->alias = $pokemon->species;
   $pokeball->specie = $pokemon->species;
   $pokeball->image = $pokemon->image;
   $pokeball->hit_points = $pokemon->hit_points;
