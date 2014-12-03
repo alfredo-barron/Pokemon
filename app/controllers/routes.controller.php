@@ -118,7 +118,14 @@ $app->post('/entrenadores', function() use($app) {
   $trainer->gender = $post->gender;
   $trainer->leader = $post->leader;
   $trainer->region_id_actual = $post->region_id_actual;
-  $trainer->save();
+   if($trainer->save()) {
+      $trainer['id'] = $trainer->id;
+      $trainer['username'] = $trainer->username;
+      $trainer['password'] = $trainer->password;
+      $trainer['name'] = $trainer->name;
+      $trainer['last_name'] = $trainer->last_name;
+    }
+      echo json_encode($trainer);
 });
 
 
@@ -165,7 +172,13 @@ $app->post('/pokebola', function() use($app){
   $status = Status::where('id',$pokeball->status_id)->first();
   $pokeball->status = $status->name;
 
-  $pokeball->save();
+  if($pokeball->save()) {
+    $pokeball['id'] = $pokeball->id;
+  } else {
+    $pokeball['id'] = 0;
+  }
+
+  echo json_encode($pokeball);
 });
 
 $app->get('/regeneradores(/:id)', function($id = null) use($app){
