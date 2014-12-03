@@ -169,12 +169,10 @@ $app->post('/pokebola', function() use($app){
   $pokeball->status = $status->name;
 
   if($pokeball->save()) {
-    $pokeball['id'] = $pokeball->id;
-  } else {
-    $pokeball['id'] = 0;
+    $pokeball = Pokeball::where('id',$pokeball->id)->first();
   }
 
-  echo json_encode($pokeball);
+  echo $pokeball->toJson();
 });
 
 $app->get('/regeneradores(/:id)', function($id = null) use($app){
