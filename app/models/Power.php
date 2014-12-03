@@ -1,5 +1,5 @@
 <?php
-class Ability extends Elegant {
+class Power extends Elegant {
   protected $table = 'powers';
   protected $rules = array(
   );

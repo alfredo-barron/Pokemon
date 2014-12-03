@@ -97,7 +97,7 @@ $app->get('/pokemon(/:id)', function($id = null) use($app){
     $response['pokemon'] = $data;
     echo json_encode($response); */
   }else{
-    $pokemon = Pokemon::with('powers')->where('id',$id)->first();
+    $pokemon = Pokemon::with('types','powers')->where('id',$id)->first();
     echo $pokemon->toJson();
   }
 });
