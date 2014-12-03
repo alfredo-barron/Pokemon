@@ -118,13 +118,9 @@ $app->post('/entrenadores', function() use($app) {
   $trainer->gender = $post->gender;
   $trainer->leader = $post->leader;
   $trainer->region_id_actual = $post->region_id_actual;
-   if($trainer->save()) {
-      $trainer['id'] = $trainer->id;
-      $trainer['username'] = $trainer->username;
-      $trainer['password'] = $trainer->password;
-      $trainer['name'] = $trainer->name;
-      $trainer['last_name'] = $trainer->last_name;
-    }
+  if($trainer->save()) {
+     $trainer = Trainer::with('region_id','region_id_actual')->where('id',$trainer->id)->first();
+   }
       echo $trainer->toJson();
 });
 
