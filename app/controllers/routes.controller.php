@@ -204,14 +204,23 @@ $app->get('/registros/:id', function($id) use($app){
 
 $app->post('/registro', function() use($app){
   $post = (object) $app->request->post();
+
   $register = new Register();
   $register->date_start = Date('Y-m-d');
   $register->regenerator_id = 1;
   $register->pokeball_id = $post->pokeball_id;
   $id = $post->pokeball_id;
+
   $pokeball = Pokeball::where('id',$id)->first();
   $register->hit_points = $pokeball->hit_points;
   $register->specie = $pokeball->specie;
+
+  $status_id = $pokeball->status_id;
+  $status = Status::where('id',$status_id)->first();
+  $tiempo = $status->time;
+
+  $register->date_end = $register->date_start + $tiempo;
+
   $register->trainer_id = $post->trainer_id;
 
   if($register->save()) {
