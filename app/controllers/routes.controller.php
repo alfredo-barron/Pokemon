@@ -206,7 +206,7 @@ $app->post('/registro', function() use($app){
   $post = (object) $app->request->post();
 
   $register = new Register();
-  $register->date_start = Date('Y-m-d H:i:S');
+  $register->date_start = Date('Y-m-d');
   $register->regenerator_id = 1;
   $register->pokeball_id = $post->pokeball_id;
   $id = $post->pokeball_id;
@@ -220,7 +220,7 @@ $app->post('/registro', function() use($app){
   $time = $status->time;
 
   $date = strtotime('+'.$time.' second'.strtotime($register->$date_start));
-  $register->date_end = date('Y-m-d H:i:S'.$date);
+  $register->date_end = date('Y-m-d'.$date);
 
   $register->trainer_id = $post->trainer_id;
 
