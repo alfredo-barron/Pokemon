@@ -219,8 +219,8 @@ $app->post('/registro', function() use($app){
   $status = Status::where('id',$status_id)->first();
   $tiempo = $status->time;
 
-  $date =strtotime('+'.$tiempo.' seconds'.strtotime($date_start));
-  $register->$date_end = date('Y-m-d H:i:S'.$date);
+  /*$date =strtotime('+'.$tiempo.' seconds'.strtotime($date_start));
+  $register->$date_end = date('Y-m-d H:i:S'.$date);*/
 
   $register->trainer_id = $post->trainer_id;
 
