@@ -128,6 +128,7 @@ create table regenerators(
   foreign key (center_id) references centers(id)
 );
 --Muchos a muchos
+
 create table registers(
   id serial primary key,
   date_start date,

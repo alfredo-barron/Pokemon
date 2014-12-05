@@ -224,6 +224,16 @@ $app->post('/registro', function() use($app){
   echo $register->toJson();
 });
 
+$app->delete('/registros/:id', function($id) use($app){
+  $pokeball = Pokeball::where('id',$id)->first();
+  $pokeball->status = "Normal";
+  $pokeball->status_id = 1;
+  $pokeball->level = $pokeball->level + 1;
+  $pokeball->save();
+  $register = Register::where('pokeball_id',$id)->first();
+  $register->delete();
+});
+
 $app->get('/habitaciones(/:id)', function($id = null) use($app){
   if($id == null){
     $habitacion = Room::with('center_id')->get();
