@@ -206,7 +206,7 @@ $app->post('/registro', function() use($app){
   $post = (object) $app->request->post();
   $register = new Register();
   $register->date_start = Date('Y-m-d');
-  $register->regenerator = 1;
+  $register->regenerator_id = 1;
   $register->pokeball_id = $post->pokeball_id;
   $pokeball = Pokeball::where('id',$post->pokeball_id)->first();
   $register->hit_points = $pokeball->hit_points;
