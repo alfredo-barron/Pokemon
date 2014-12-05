@@ -124,6 +124,18 @@ $app->post('/entrenadores', function() use($app) {
       echo $trainer->toJson();
 });
 
+$app->put('/entrenadores/:id', function($id) use($app){
+  $post = (object) $app->request->post();
+  $trainer = Trainer::with('region_id','region_id_actual')->where('id',$id)->first();
+  $trainer->name = $post->name;
+  $trainer->last_name = $post->last_name;
+  $trainer->username = $post->username;
+  $trainer->password = $post->password;
+  if($trainer->save()) {
+     $trainer = Trainer::with('region_id','region_id_actual')->where('id',$trainer->id)->first();
+   }
+      echo $trainer->toJson();
+});
 
 $app->get('/pokebolas(/:id)', function($id = null) use($app){
   if($id == null){
