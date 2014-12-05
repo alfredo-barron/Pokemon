@@ -210,6 +210,7 @@ $app->post('/registro', function() use($app){
   $register->pokeball_id = $post->pokeball_id;
   $pokeball = Pokeball::where('id',$post->pokeball_id)->first();
   $register->hit_points = $pokeball->hit_points;
+  $register->specie = $pokeball->specie;
   $register->trainer_id = $post->trainer_id;
 
   if($register->save()) {
