@@ -214,13 +214,6 @@ $app->post('/registro', function() use($app){
   $pokeball = Pokeball::where('id',$id)->first();
   $register->hit_points = $pokeball->hit_points;
   $register->specie = $pokeball->specie;
-  $status_id = $pokeball->status_id;
-
-  $status = Status::where('id',$status_id)->first();
-  $time = $status->time;
-
-  $date = strtotime('+'.$time.' second'.strtotime($register->$date_start));
-  $register->date_end = date('Y-m-d'.$date);
 
   $register->trainer_id = $post->trainer_id;
 
