@@ -215,13 +215,6 @@ $app->post('/registro', function() use($app){
   $register->hit_points = $pokeball->hit_points;
   $register->specie = $pokeball->specie;
 
-  $status_id = $pokeball->status_id;
-  $status = Status::where('id',$status_id)->first();
-  $tiempo = $status->time;
-
-  /*$date =strtotime('+'.$tiempo.' seconds'.strtotime($date_start));
-  $register->$date_end = date('Y-m-d H:i:S'.$date);*/
-
   $register->trainer_id = $post->trainer_id;
 
   if($register->save()) {
