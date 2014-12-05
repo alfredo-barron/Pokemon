@@ -130,8 +130,8 @@ create table regenerators(
 --Muchos a muchos
 create table registers(
   id serial primary key,
-  date_start datetime,
-  date_end datetime,
+  date_start date,
+  date_end date,
   regenerator_id int not null,
   hit_points int not null,
   pokeball_id int not null,
