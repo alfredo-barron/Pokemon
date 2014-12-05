@@ -197,7 +197,27 @@ $app->get('/regeneradores(/:id)', function($id = null) use($app){
   }
 });
 
+$app->get('/registros/:id', function($id) use($app){
+  $register = Register::where('trainer_id',$id)->get();
+  echo $register->toJson();
+});
 
+$app->post('/registro', function() use($app){
+  $post = (object) $app->request->post();
+  $register = new Register();
+  $register->date_start = Date('Y-m-d');
+  $register->regenerator = 1;
+  $register->pokeball_id = $post->pokeball_id;
+  $pokeball = Pokeball::where('id',$post->pokeball_id)->first();
+  $register->hit_points = $pokeball->hit_points;
+  $register->trainer_id = $post->trainer_id;
+
+  if($register->save()) {
+    $register = Register::where('id',$register->id)->first();
+  }
+
+  echo $register->toJson();
+});
 
 $app->get('/habitaciones(/:id)', function($id = null) use($app){
   if($id == null){

@@ -130,14 +130,16 @@ create table regenerators(
 --Muchos a muchos
 create table registers(
   id serial primary key,
-  date_start timestamp,
-  date_end timestamp,
+  date_start date,
+  date_end date,
   regenerator_id int not null,
   hit_points int not null,
   pokeball_id int not null,
+  trainer_id int not null,
   available boolean default '1',
   foreign key (regenerator_id) references regenerators(id),
-  foreign key (pokeball_id) references pokeballs(id)
+  foreign key (pokeball_id) references pokeballs(id),
+  foreign key (trainer_id) references trainers(id)
 );
 
 create table rooms(
