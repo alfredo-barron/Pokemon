@@ -19,6 +19,15 @@ $app->get('/inicio/:id', function($id) use($app){
 
 });
 
+$app->put("/batalla/:id", function($id) use($app){
+  $pokeball = Pokeball::where('id',$id)->first();
+  $pokeball->status_id = rand(2,8);
+  $pokeball->level = $pokeball->level + 1;
+  $status = Status::where('id',$pokeball->status_id)->first();
+  $pokeball->status = $status->name;
+  $pokeball->save();
+});
+
 $app->get('/regiones(/:id)', function($id = null) use($app){
   if($id == null){
     $region = Region::all();
@@ -104,7 +113,6 @@ $app->get('/entrenadores(/:id)', function($id = null) use($app){
   }
 });
 
-
 $app->post('/entrenadores', function() use($app) {
   $post = (object) $app->request->post();
   $trainer = new Trainer();
@@ -185,6 +193,11 @@ $app->post('/pokebola', function() use($app){
   }
 
   echo $pokeball->toJson();
+});
+
+$app->delete('/pokebola/:id', function($id) use($app){
+  $pokeball = Pokeball::where('id',$id)->first();
+  $pokeball->delete();
 });
 
 $app->get('/regeneradores(/:id)', function($id = null) use($app){
