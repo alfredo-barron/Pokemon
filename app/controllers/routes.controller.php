@@ -197,6 +197,8 @@ $app->get('/regeneradores(/:id)', function($id = null) use($app){
   }
 });
 
+
+
 $app->get('/habitaciones(/:id)', function($id = null) use($app){
   if($id == null){
     $habitacion = Room::with('center_id')->get();

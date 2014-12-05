@@ -128,14 +128,12 @@ create table regenerators(
   foreign key (center_id) references centers(id)
 );
 --Muchos a muchos
-create table regenerator_pokeball(
+create table registers(
   id serial primary key,
   date_start timestamp,
-  date_estimated timestamp,
   date_end timestamp,
   regenerator_id int not null,
   hit_points int not null,
-  status int not null,
   pokeball_id int not null,
   available boolean default '1',
   foreign key (regenerator_id) references regenerators(id),
@@ -783,7 +781,7 @@ INSERT INTO pokemon VALUES (1,6,'Tree','Masculino',1,true,100,40,50,70,50,90,1,f
 INSERT INTO pokebolas VALUES (1,2,1,true,false),(2,2,2,true,false),(3,2,3,true,true),(4,3,4,true,false),(5,4,5,true,false),(6,2,1,true,false),(7,6,6,true,false),(8,7,7,true,false),(9,8,8,true,false),(10,9,9,true,true);
 
 INSERT INTO regeneradores VALUES (1,'50',10,false,1,true),(2,'150',50,true,1,true),(3,'75',20,false,1,true),(4,'50',15,false,1,true),(5,'75',10,true,1,true);
-INSERT INTO regenerators VALUES (1,'50',10,false,1,true),(2,'150',50,true,1,true),(3,'75',20,false,1,true),(4,'50',15,false,1,true),(5,'75',10,true,1,true);
+INSERT INTO regenerators VALUES (1,'150',10,false,1,true);
 
 INSERT INTO registros VALUES (1,12,NULL,'2013-12-10 20:18:00',NULL,NULL,1,100,1,3,false),(2,12,NULL,'2013-12-10 23:21:00',NULL,NULL,1,100,1,1,false),(3,12,NULL,'2013-12-11 00:29:00',NULL,NULL,1,5,7,2,true),(4,13,NULL,'2013-12-11 09:48:00',NULL,NULL,1,100,1,10,false);
 
