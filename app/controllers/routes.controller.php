@@ -206,7 +206,7 @@ $app->post('/registro', function() use($app){
   $post = (object) $app->request->post();
 
   $register = new Register();
-  $register->date_start = Date('Y-m-d H:i:S');
+  $register->date_start = Date('Y-m-d');
   $register->regenerator_id = 1;
   $register->pokeball_id = $post->pokeball_id;
   $id = $post->pokeball_id;
