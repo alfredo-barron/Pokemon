@@ -7,7 +7,7 @@ $app->get('/inicio/:id', function($id) use($app){
     $notices[] =  array(
           'id' => $pk->id,
           'specie' => $pk->specie,
-          'image' => $pk->image,
+          'image' => $pk->url,
           'alias' => $pk->alias,
           'status' => $pk->status,
           'trainer' => $trainer->username,
